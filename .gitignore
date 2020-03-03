@@ -24,3 +24,8 @@ yarn-error.log*
 
 *.iml
 .idea
+
+.firebaserc
+.firebase
+
+.env

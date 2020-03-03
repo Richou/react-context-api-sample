@@ -1,0 +1,12 @@
+div.tabs-closable-item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  &:hover {
+    cursor: pointer;
+  }
+
+  &+div.add-button {
+    margin-left: 5px;
+  }
+}
