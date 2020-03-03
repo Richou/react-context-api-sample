@@ -3,7 +3,7 @@ import { Button, InputField, SelectField } from '../../core/ui'
 
 import './home.scss'
 import { withRouter } from "react-router";
-import { LOGOUT_ROUTE } from "../quercus.routes";
+import { LOGOUT_ROUTE } from "../castanea.routes";
 
 function Home({ history }) {
   const [value, setValue] = React.useState('')
