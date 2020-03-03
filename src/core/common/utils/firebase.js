@@ -9,8 +9,6 @@ const config = {
 firebase.initializeApp(config)
 
 export default function Firebase() {
-
-
   const githubAuthProvider = new firebase.auth.GithubAuthProvider()
   const googleAuthProvider = new firebase.auth.GoogleAuthProvider()
   const authentication = firebase.auth()
