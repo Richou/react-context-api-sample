@@ -10,11 +10,15 @@ export default {
   decorators: [withKnobs]
 }
 
-export const SimpleButton = () => (
-  <Button
-    onClick={action('clicked')}
-    disabled={boolean("Disabled", false)}
-  >
-    {text('Label', 'Simple Button')}
-  </Button>
-)
+export const SimpleButton = () => {
+  const groupId = 'SIMPLE-BTN-01'
+
+  return (
+    <Button
+      onClick={action('clicked')}
+      disabled={boolean("Disabled", false, groupId)}
+    >
+      {text('Label', 'Simple Button', groupId)}
+    </Button>
+  )
+}

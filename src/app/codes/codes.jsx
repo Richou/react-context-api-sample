@@ -4,14 +4,14 @@ import { CastaneaContainer } from '../../core/components/castanea'
 
 import CastaneaMenu from '../castanea.menu'
 
-import './home.scss'
+import './codes.scss'
 
-function Home() {
+function Codes() {
   return (
     <CastaneaContainer menu={CastaneaMenu}>
-      <header>Dashboard</header>
+      <header>Codes space</header>
     </CastaneaContainer>
   )
 }
 
-export default Home
+export default Codes
