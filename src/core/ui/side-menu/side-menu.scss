@@ -12,7 +12,7 @@ nav.side-menu-content {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding-top: calc(#{$primary-padding} * 4);
+  padding-top: $header-height;
 
   ul {
     list-style: none;

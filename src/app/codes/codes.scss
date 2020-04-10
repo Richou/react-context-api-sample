@@ -1,3 +1,13 @@
 button.full-width {
   width: 100%;
 }
+
+div.codes-space-projects {
+  padding: 10px;
+
+  div.add-project {
+    display: flex;
+    flex-direction: column;
+  }
+}
+

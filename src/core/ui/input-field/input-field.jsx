@@ -4,6 +4,7 @@ import Textfield from '@atlaskit/textfield'
 
 function InputField(props) {
   const {
+    name,
     type,
     value,
     onChange,
@@ -16,6 +17,7 @@ function InputField(props) {
 
   return (
     <Textfield
+      name={name}
       type={type}
       onChange={onChange}
       value={value}
@@ -29,6 +31,7 @@ function InputField(props) {
 }
 
 InputField.propTypes = {
+  name: PropTypes.string.isRequired,
   type: PropTypes.string,
   onChange: PropTypes.func.isRequired,
   placeholder: PropTypes.string,

@@ -2,7 +2,7 @@ import React from 'react'
 import { action } from '@storybook/addon-actions'
 import { boolean, text, withKnobs } from '@storybook/addon-knobs'
 
-import Button from '.'
+import { Button } from '.'
 
 export default {
   title: 'Basic Button',
