@@ -3,12 +3,16 @@
 button.qs-button {
   padding: $primary-padding calc(#{$primary-padding} + 10px);
   background-color: $primary-color;
-  color: $primary-font-color;
+  color: $primary-font-color !important;
   font-weight: bold;
   font-family: 'Roboto', Helvetica, Arial, sans-serif;
   font-size: 0.875rem;
   border: 0;
   line-height: 1.75;
+
+  svg {
+    stroke: $primary-font-color;
+  }
 
   &:hover:not([disabled]) {
     background-color: lighten($primary-color, 20%);

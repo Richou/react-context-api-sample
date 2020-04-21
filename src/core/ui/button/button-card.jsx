@@ -4,11 +4,15 @@ import clsx from 'clsx'
 
 import './button-card.scss'
 
-function ButtonCard({ onClick, disabled, children }) {
+function ButtonCard({ onClick, disabled, children, className }) {
+  function onClickHandler() {
+    if (!disabled) onClick()
+  }
+
   return (
     <div
-      className={clsx('button-card', disabled && 'disabled')}
-      onClick={onClick}
+      className={clsx('button-card', disabled && 'disabled', className !== null ? className : '' )}
+      onClick={onClickHandler}
     >
       {children}
     </div>
@@ -16,14 +20,15 @@ function ButtonCard({ onClick, disabled, children }) {
 }
 
 ButtonCard.propTypes = {
-  children: PropTypes.object,
   onClick: PropTypes.func.isRequired,
   disabled: PropTypes.bool,
+  className: PropTypes.string,
 }
 
 ButtonCard.defaultProps = {
   children: null,
   disabled: false,
+  className: null,
 }
 
 export default ButtonCard

@@ -13,20 +13,29 @@ function InputField(props) {
     required,
     error,
     disabled,
+    label,
   } = props
 
+  function renderLabel() {
+    if (!required) return label
+    return `${label} *`
+  }
+
   return (
-    <Textfield
-      name={name}
-      type={type}
-      onChange={onChange}
-      value={value}
-      isRequired={required}
-      isInvalid={error}
-      isDisabled={disabled}
-      width={size}
-      placeholder={placeholder}
-    />
+    <>
+      {label && (<label htmlFor={name}>{renderLabel()}</label> )}
+      <Textfield
+        name={name}
+        type={type}
+        onChange={onChange}
+        value={value}
+        isRequired={required}
+        isInvalid={error}
+        isDisabled={disabled}
+        width={size}
+        placeholder={placeholder}
+      />
+    </>
   )
 }
 
@@ -40,6 +49,7 @@ InputField.propTypes = {
   required: PropTypes.bool,
   error: PropTypes.bool,
   disabled: PropTypes.bool,
+  label: PropTypes.string,
 }
 
 InputField.defaultProps = {
@@ -50,6 +60,7 @@ InputField.defaultProps = {
   required: false,
   error: false,
   disabled: false,
+  label: null,
 }
 
 export default InputField

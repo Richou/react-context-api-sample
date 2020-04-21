@@ -4,10 +4,12 @@ import SelectField from './select-field'
 import CodeEditor from './code-editor'
 import Tooltip from './tooltip'
 import FullscreenDialog from './fullscreen-dialog'
+import Checkbox from './check-box'
 
 export {
   Button,
   ButtonCard,
+  Checkbox,
   InputField,
   SelectField,
   CodeEditor,

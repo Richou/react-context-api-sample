@@ -4,10 +4,30 @@ button.full-width {
 
 div.codes-space-projects {
   padding: 10px;
+  display: flex;
 
-  div.add-project {
-    display: flex;
-    flex-direction: column;
+  div.button-card {
+    margin: 10px;
+
+    &.project-btn {
+      flex-direction: column;
+      justify-content: space-around;
+
+      header {
+        font-weight: bold;
+      }
+
+      footer {
+        font-size: 0.85rem;
+        font-style: italic;
+      }
+    }
+
+    div.add-project {
+      display: flex;
+      flex-direction: column;
+    }
   }
+
 }
 

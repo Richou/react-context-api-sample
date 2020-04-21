@@ -18,10 +18,11 @@ export const BasicTextFields = () => {
 
   return (
     <React.Fragment>
-      <InputField onChange={handleChange} value={textValue} placeholder="This is a small InputField" size="small" />
-      <InputField onChange={handleChange} value={textValue} placeholder="This is a full width InputField" />
-      <InputField onChange={handleChange} error value={textValue} placeholder="The field has error" />
-      <InputField onChange={handleChange} disabled value={textValue} placeholder="The field is disabled" />
+      <InputField name="small" onChange={handleChange} value={textValue} placeholder="This is a small InputField" size="small" />
+      <InputField name="full-width" onChange={handleChange} value={textValue} placeholder="This is a full width InputField" />
+      <InputField name="error" onChange={handleChange} error value={textValue} placeholder="The field has error" />
+      <InputField name="disabled" onChange={handleChange} disabled value={textValue} placeholder="The field is disabled" />
+      <InputField name="labelled" label="I'm a label for this field" onChange={handleChange} value={textValue} placeholder="The field has label" />
     </React.Fragment>
   )
 }

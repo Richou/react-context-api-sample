@@ -17,6 +17,7 @@ export const SimpleButton = () => {
     <Button
       onClick={action('clicked')}
       disabled={boolean("Disabled", false, groupId)}
+      loading={boolean("Loading", false, groupId)}
     >
       {text('Label', 'Simple Button', groupId)}
     </Button>
