@@ -3,16 +3,23 @@ import PropTypes from 'prop-types'
 import AddIcon from '@atlaskit/icon/glyph/add'
 import pluralize from 'pluralize'
 
-import { CastaneaContainer, CastaneaHeader } from '../../core/components/castanea'
+import { CastaneaContainer, CastaneaHeader } from '../../../core/components/castanea'
 
-import CastaneaMenu from '../castanea.menu'
+import CastaneaMenu from '../../castanea.menu'
 
 import './codes.scss'
 
-import { ButtonCard, FullscreenDialog } from "../../core/ui";
+import { ButtonCard, FullscreenDialog } from "../../../core/ui";
 import CodesForm from "./codes-form";
+import { HOME_ROUTE } from "../../castanea.routes";
 
-function Codes({ codesProjects, onCodesCreate, loadings }) {
+const breadcrumb = [
+  {
+    to: HOME_ROUTE.url,
+    label: HOME_ROUTE.label,
+  },
+]
+function Codes({ codesProjects, onCodesCreate, onCodesClicked, loadings }) {
   const [open, setOpen] = React.useState(false)
 
   async function onCodesSubmitHandle(codesRequest) {
@@ -37,7 +44,7 @@ function Codes({ codesProjects, onCodesCreate, loadings }) {
 
   return (
     <CastaneaContainer menu={CastaneaMenu}>
-      <CastaneaHeader>Codes space</CastaneaHeader>
+      <CastaneaHeader breadcrumb={breadcrumb}>Codes Space</CastaneaHeader>
       <div className="codes-space-projects">
         <ButtonCard onClick={handleClickOpen}>
           <div className="add-project">
@@ -46,7 +53,7 @@ function Codes({ codesProjects, onCodesCreate, loadings }) {
           </div>
         </ButtonCard>
         {codesProjects && codesProjects.map((project) => (
-          <ButtonCard className="project-btn" key={project.id} onClick={() => console.log(project.name)}>
+          <ButtonCard className="project-btn" key={project.id} onClick={() => onCodesClicked(project.id)}>
             <header>{project.name}</header>
             <footer>{renderFilesNumber(project.files)}</footer>
           </ButtonCard>
@@ -62,6 +69,7 @@ function Codes({ codesProjects, onCodesCreate, loadings }) {
 Codes.propTypes = {
   codesProjects: PropTypes.arrayOf(PropTypes.object),
   onCodesCreate: PropTypes.func.isRequired,
+  onCodesClicked: PropTypes.func,
   loadings: PropTypes.shape({
     creating: PropTypes.bool,
   }),
@@ -69,6 +77,7 @@ Codes.propTypes = {
 
 Codes.defaultProps = {
   codesProjects: [],
+  onCodesClicked: () => {},
   loadings: {
     creating: false,
   },

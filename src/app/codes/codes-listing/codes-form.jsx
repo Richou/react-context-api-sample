@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Button, Checkbox, InputField } from "../../core/ui";
+import { Button, Checkbox, InputField } from "../../../core/ui";
 
 function CodesForm({ onSubmit, working }) {
   const [inputs, setInputs] = React.useState({

@@ -1,7 +1,7 @@
 import React from 'react'
 import { select, withKnobs } from '@storybook/addon-knobs'
 
-import CodeEditor from '.'
+import { CodeEditor } from '.'
 
 import 'codemirror/mode/javascript/javascript'
 import 'codemirror/mode/sql/sql'

@@ -9,7 +9,7 @@ import './side-menu.scss'
 function SideMenu({ menu, history, location }) {
 
   function computeItemClass(url) {
-    if (url === location.pathname) return 'active'
+    if (url === location.pathname || location.pathname.startsWith(`${url}/`)) return 'active'
     return ''
   }
 

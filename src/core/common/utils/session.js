@@ -1,20 +1,20 @@
-const SESSION_TOKEN_KEY = 'session-token'
-const SESSION_USER_ID = 'user-id'
-
-export const token = () => {
-  return localStorage.getItem(SESSION_TOKEN_KEY)
-}
-
-export const setToken = (token) => {
-  localStorage.setItem(SESSION_TOKEN_KEY, token)
-}
+const SESSION_IS_LOGGED_USER = 'session:logged-user'
+const SESSION_USER_ID = 'session:user-id'
 
 export const setUserId = (userId) => {
   localStorage.setItem(SESSION_USER_ID, userId)
 }
 
-export const userId = () => {
+export const getUserId = () => {
   return localStorage.getItem(SESSION_USER_ID)
+}
+
+export const setLoggedUser = () => {
+  localStorage.setItem(SESSION_IS_LOGGED_USER, 'IsLogged')
+}
+
+export const isLoggedUser = () => {
+  return localStorage.getItem(SESSION_IS_LOGGED_USER) === 'IsLogged'
 }
 
 export const clearSession = () => {

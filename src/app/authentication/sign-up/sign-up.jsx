@@ -4,7 +4,10 @@ import { Button } from "../../../core/ui";
 
 function SignUp({ onSignUpClicked }) {
   return (
-    <Button onClick={onSignUpClicked}>Sign Up</Button>
+    <>
+      <Button onClick={() => onSignUpClicked('github')}>Sign in with Github</Button>
+      <Button onClick={() => onSignUpClicked('google')}>Sign in with Google</Button>
+    </>
   )
 }
 

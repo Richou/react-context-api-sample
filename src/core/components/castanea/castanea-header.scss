@@ -8,4 +8,31 @@ header.castanea-header {
   border-bottom-style: solid;
   border-bottom-color: $separator-color;
   height: $header-height;
+
+  nav.castanea-breadcrumb-container {
+    ul {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: row;
+
+      & > li {
+
+        & > a {
+          text-decoration: none;
+          color: $secondary-font-color;
+
+          &:hover {
+            color: lighten($secondary-font-color, 30%);
+          }
+        }
+
+        &:after {
+          content: '>';
+          padding: $primary-padding;
+        }
+      }
+    }
+  }
 }

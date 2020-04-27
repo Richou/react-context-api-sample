@@ -7,6 +7,11 @@ const codesReducer = (state, action) => {
         ...state,
         codesProjects: action.payload,
       }
+    case CodesTypes.SET_CODES_WORKSPACE:
+      return {
+        ...state,
+        codesWorkspace: action.payload,
+      }
     default:
       return { ...state }
   }

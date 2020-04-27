@@ -2,7 +2,6 @@ import React from 'react'
 import SignUp from './sign-up'
 import Firebase from '../../../core/common/utils/firebase'
 import AuthenticationService from '../authentication.service'
-import { setToken, setUserId } from "../../../core/common/utils/session";
 import { withRouter } from "react-router";
 import { HOME_ROUTE } from "../../castanea.routes";
 
@@ -11,13 +10,10 @@ const authenticationService = AuthenticationService(firebase)
 
 function SignUpWrapper({ history }) {
 
-  async function onSignUpHandler() {
+  async function onSignUpHandler(type) {
     try {
-      const response = await authenticationService.doLogin()
+      await authenticationService.doLogin(type)
 
-      console.log(response)
-      setToken(response.credential.idToken)
-      setUserId(response.user.uid)
       history.push(HOME_ROUTE.url)
     } catch (error) {
       console.error('error', error)

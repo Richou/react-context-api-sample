@@ -8,7 +8,10 @@ export default function AuthenticationService(firebase) {
 
 
   async function doLogin(type = 'github') {
-    return authentication.signInWithPopup(providers[type])
+    const provider = providers[type]
+    provider.addScope('profile')
+    provider.addScope('email')
+    return authentication.signInWithPopup(provider)
   }
 
   async function doLogout() {

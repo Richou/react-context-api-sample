@@ -12,8 +12,16 @@ export default function CodesContextHelper(ctx, dispatch) {
     })
   }
 
+  function dispatchCodesWorkspace(project) {
+    dispatch({
+      type: CodesTypes.SET_CODES_WORKSPACE,
+      payload: project,
+    })
+  }
+
   return Object.freeze({
     context,
     dispatchProjects,
+    dispatchCodesWorkspace,
   })
 }

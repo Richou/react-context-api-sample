@@ -1,0 +1,10 @@
+@import '../../../core/common/styles/__variables';
+
+div.codes-workspace-container {
+  position: fixed;
+  left: $side-menu-width;
+  top: 48px;
+  right: 0;
+  bottom: 0;
+  height: auto;
+}

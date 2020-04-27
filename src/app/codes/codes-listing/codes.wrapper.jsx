@@ -1,14 +1,12 @@
 import React from 'react'
 import Codes from './codes'
-import ProjectService from '../../core/business/project/project.service'
-import Firebase from '../../core/common/utils/firebase'
 import { compose } from 'recompose'
-import { withCodesContext } from './context/codes.hoc'
+import { withCodesContext } from '../context/codes.hoc'
+import { withRouter } from "react-router";
+import { CODES_WORKSPACE } from "../../castanea.routes";
+import { withCodesDependenciesInjection } from "../context/codes.di";
 
-const firebase = Firebase()
-const projectService = ProjectService(firebase.getFirestore())
-
-function CodesWrapper({ codesContextHelper }) {
+function CodesWrapper({ history, projectService, codesContextHelper }) {
   const [, setWorking] = React.useState(false)
   const [creating, setCreating] = React.useState(false)
 
@@ -31,10 +29,17 @@ function CodesWrapper({ codesContextHelper }) {
     return true
   }
 
+  function onCodesClickedHandle(id) {
+    const selected = codesContextHelper.context().codesProjects.find((project) => project.id === id)
+    codesContextHelper.dispatchCodesWorkspace(selected)
+    history.push(CODES_WORKSPACE.url.replace(':id', id))
+  }
+
   return (
     <Codes
       codesProjects={codesContextHelper.context().codesProjects}
       onCodesCreate={onCodesCreateHandle}
+      onCodesClicked={onCodesClickedHandle}
       loadings={{ creating }}
     />
   )
@@ -42,4 +47,6 @@ function CodesWrapper({ codesContextHelper }) {
 
 export default compose(
   withCodesContext,
+  withCodesDependenciesInjection,
+  withRouter,
 )(CodesWrapper)

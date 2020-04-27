@@ -1,1 +1,1 @@
-export { default } from './codes.wrapper'
+export { default } from './codes-listing/codes.wrapper'
