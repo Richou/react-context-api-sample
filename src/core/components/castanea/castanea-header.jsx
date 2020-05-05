@@ -1,13 +1,14 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 
 import './castanea-header.scss'
-import { Link } from "react-router-dom";
 
-function CastaneaHeader({ breadcrumb, children }) {
+function CastaneaHeader({ breadcrumb = [], children }) {
   function renderBreadcrumbItem(item, key) {
     return (
-      <li>
-        <Link to={item.to} key={key}>{item.label}</Link>
+      <li key={key}>
+        {item.to && (<Link to={item.to}>{item.label}</Link>)}
+        {!item.to && (<span>{item.label}</span>)}
       </li>
     )
   }
@@ -17,9 +18,9 @@ function CastaneaHeader({ breadcrumb, children }) {
       {breadcrumb && (<nav className="castanea-breadcrumb-container">
         <ul>
           {breadcrumb.map(renderBreadcrumbItem)}
+          {children && (<li>{children}</li>)}
         </ul>
       </nav>)}
-      {children}
     </header>
   )
 }

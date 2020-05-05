@@ -8,30 +8,48 @@ export default {
 }
 
 export const SimpleTreeView = () => {
+  function onActions(type, param) {
+    console.log(type, param)
+  }
+
   return (
     <div style={{ margin: 10 }}>
       <TreeView
+        onActions={onActions}
         data={{
           title: 'Tree view sample',
           items: [
             {
               title: 'test',
-              bla: 'hello',
               actions: [
                 {
                   type: 'create',
-                }
+                  label: 'Create Directory'
+                },
               ],
               items: [
                 {
                   title: 'SubTest',
-                  bla: 'SubHello',
+                  actions: [
+                    {
+                      type: 'create',
+                      label: 'Create Directory',
+                    },
+                    {
+                      type: 'view',
+                      label: 'View details',
+                    },
+                  ],
+                  items: [
+                    {
+                      title: 'SubTest',
+                    },
+                  ],
                 },
               ],
             },
             {
               title: 'test 2',
-              bla: 'hello 2',
               items: [],
             },
           ]

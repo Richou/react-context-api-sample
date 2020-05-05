@@ -4,23 +4,30 @@ import { Controlled as CodeMirror } from 'react-codemirror2'
 
 import 'codemirror/addon/hint/show-hint.css'
 import 'codemirror/addon/hint/show-hint.js'
+import 'codemirror/addon/hint/anyword-hint.js'
 import 'codemirror/addon/hint/javascript-hint'
 import 'codemirror/addon/hint/sql-hint'
+import 'codemirror/theme/dracula.css'
 
 import './code-editor.scss'
 
-function CodeEditor({ lang, onChange, value, autocomplete }) {
+function CodeEditor({ lang, onChange, value, autocomplete, dark }) {
   return (
     <CodeMirror
       options={{
         mode: lang,
         lineNumbers: true,
-        extraKeys: {
-          'Ctrl-Space': 'autocomplete'
-        }
+        theme: (dark) ? 'dracula' : 'default',
+        tabSize: 2,
       }}
       value={value}
       onChange={() => {}}
+      onKeyUp={((editor, event) => {
+        console.log(event)
+        if (event.keyCode > 64 && event.keyCode < 91) {
+          editor.showHint({ completeSingle: false })
+        }
+      })}
       onBeforeChange={(editor, data, value) => {
         if (data.origin) {
           onChange(value)
@@ -35,6 +42,7 @@ CodeEditor.propTypes = {
   autocomplete: PropTypes.bool,
   onChange: PropTypes.func,
   value: PropTypes.string,
+  dark: PropTypes.bool,
 }
 
 CodeEditor.defaultProps = {
@@ -42,6 +50,7 @@ CodeEditor.defaultProps = {
   onChange: () => {},
   autocomplete: false,
   value: '',
+  dark: false,
 }
 
 export default CodeEditor

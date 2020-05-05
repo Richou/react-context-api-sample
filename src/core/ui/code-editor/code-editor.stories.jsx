@@ -1,5 +1,5 @@
 import React from 'react'
-import { select, withKnobs } from '@storybook/addon-knobs'
+import { boolean, select, withKnobs } from '@storybook/addon-knobs'
 
 import { CodeEditor } from '.'
 
@@ -25,6 +25,11 @@ export const SimpleCodeEditor = () => {
   const languages = select('lang', modes, defaultMode, groupId)
 
   return (
-    <CodeEditor lang={languages} onChange={setValue} value={value} />
+    <CodeEditor
+      lang={languages}
+      onChange={setValue}
+      value={value}
+      dark={boolean('Dark Theme ?', false, groupId)}
+    />
   )
 }

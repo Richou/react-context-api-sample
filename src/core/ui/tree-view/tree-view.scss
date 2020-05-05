@@ -1,7 +1,12 @@
-div.tree-view-more-menu {
+@import '../../common/styles/__variables.scss';
 
-  div.tree-view-menu-button {
+div.tree-view-more-menu {
+  &:hover {
     cursor: pointer;
+    background-color: lighten($primary-color, 60%);
+  }
+  div.tree-view-menu-button {
+
   }
 
   ul {

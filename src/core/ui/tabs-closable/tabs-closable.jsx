@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Tabs, { TabItem } from '@atlaskit/tabs'
-import EditorCloseIcon from '@atlaskit/icon/glyph/editor/close'
-import EditorAddIcon from '@atlaskit/icon/glyph/editor/add'
+import { Add as AddIcon } from '../../icons'
+import { Close as CloseIcon } from '../../icons'
 
 import './tabs-closable.scss'
 
@@ -27,7 +27,7 @@ function TabsClosable({ tabs, onItemClose, onAddItem }) {
     if (props.data.id === 'add') {
       return (
         <div className="tabs-closable-item add-button">
-          <span onClick={addItemHandler}><EditorAddIcon size="small" /></span>
+          <div onClick={addItemHandler}><AddIcon size={8} /></div>
         </div>
       )
     }
@@ -35,7 +35,7 @@ function TabsClosable({ tabs, onItemClose, onAddItem }) {
     return (
       <div className="tabs-closable-item">
         <TabItem {...props} />
-        {tabs && tabs.length !== 1 && (<span onClick={() => closeItemHandler(props.data.id)}><EditorCloseIcon size="small" /></span>)}
+        {tabs && tabs.length !== 1 && (<span onClick={() => closeItemHandler(props.data.id)}><CloseIcon size={8} /></span>)}
       </div>
     )
   }

@@ -20,6 +20,9 @@ header.castanea-header {
       & > li {
 
         & > a {
+          display: inline-flex;
+          flex-direction: row;
+          align-items: center;
           text-decoration: none;
           color: $secondary-font-color;
 
@@ -28,7 +31,7 @@ header.castanea-header {
           }
         }
 
-        &:after {
+        &:not(:last-child):after {
           content: '>';
           padding: $primary-padding;
         }
