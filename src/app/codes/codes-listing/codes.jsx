@@ -28,13 +28,13 @@ function Codes({ codesProjects, onCodesCreate, onCodesClicked, loadings }) {
     if (succeed) handleClose()
   }
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+  function handleClickOpen() {
+    setOpen(true)
+  }
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  function handleClose() {
+    setOpen(false)
+  }
 
   function renderFilesNumber(files) {
     const filteredFiles = files.filter((file) => file.mimeType !== 'directory')
@@ -55,6 +55,7 @@ function Codes({ codesProjects, onCodesCreate, onCodesClicked, loadings }) {
         {codesProjects && codesProjects.map((project) => (
           <ButtonCard className="project-btn" key={project.id} onClick={() => onCodesClicked(project.id)}>
             <header>{project.name}</header>
+            <section>{project.description}</section>
             <footer>{renderFilesNumber(project.files)}</footer>
           </ButtonCard>
         ))}

@@ -1,10 +1,17 @@
 @import '../../../core/common/styles/__variables';
 
-div.codes-workspace-container {
-  position: fixed;
-  left: $side-menu-width;
-  top: 48px;
-  right: 0;
-  bottom: 0;
-  height: auto;
+div.codes-workspace-main {
+  width: calc(100vw - #{$side-menu-width});
+  height: 100vh;
+
+  div.codes-workspace-container {
+    display: grid;
+    grid-template-columns: 300px auto;
+    grid-template-rows: auto;
+    height: calc(100vh - #{$side-menu-width});
+
+    div.codes-workspace-files {
+      padding-top: $primary-padding * 2;
+    }
+  }
 }

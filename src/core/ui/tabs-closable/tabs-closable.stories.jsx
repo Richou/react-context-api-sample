@@ -12,7 +12,7 @@ export const SimpleTabs = () => {
     {
       id: 'one',
       label: 'Tab one',
-      content: <p>Hello Tab One !</p>,
+      content: <p style={{ backgroundColor: 'red', }}>Hello Tab One !</p>,
     },
     {
       id: 'two',

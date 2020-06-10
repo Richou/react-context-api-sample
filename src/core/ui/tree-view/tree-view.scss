@@ -1,5 +1,40 @@
 @import '../../common/styles/__variables.scss';
 
+div.tree-view-container {
+
+  span.is-active {
+    background-color: lighten($primary-color, 60%);
+  }
+
+  div.tree-view-tool-bar {
+    position: relative;
+    display: flex;
+    padding-bottom: 4px;
+    i {
+      margin-right: 5px;
+      cursor: pointer;
+    }
+    i :hover {
+      color: $secondary-font-color;
+    }
+
+    span.tree-view-name {
+      padding-left: 4px;
+      width: 100%;
+    }
+
+    div.tree-view-tool-bar-folder {
+      position: absolute;
+      text-align: right;
+      width: 100%;
+      color: transparent;
+      &:hover {
+        color: $secondary-font-color;
+      }
+    }
+  }
+}
+
 div.tree-view-more-menu {
   &:hover {
     cursor: pointer;

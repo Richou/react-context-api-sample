@@ -7,53 +7,30 @@ export default {
   component: TreeView,
 }
 
+const tree = {
+  module: 'react-ui-tree',
+  id: '01',
+  children: [{
+    module: 'dist',
+    id: '02',
+    children: [{
+      module: 'node.js',
+      id: '03',
+    }]
+  }]
+}
+
 export const SimpleTreeView = () => {
   function onActions(type, param) {
     console.log(type, param)
   }
 
   return (
-    <div style={{ margin: 10 }}>
+    <div style={{ margin: 10, width: '200px' }}>
       <TreeView
         onActions={onActions}
-        data={{
-          title: 'Tree view sample',
-          items: [
-            {
-              title: 'test',
-              actions: [
-                {
-                  type: 'create',
-                  label: 'Create Directory'
-                },
-              ],
-              items: [
-                {
-                  title: 'SubTest',
-                  actions: [
-                    {
-                      type: 'create',
-                      label: 'Create Directory',
-                    },
-                    {
-                      type: 'view',
-                      label: 'View details',
-                    },
-                  ],
-                  items: [
-                    {
-                      title: 'SubTest',
-                    },
-                  ],
-                },
-              ],
-            },
-            {
-              title: 'test 2',
-              items: [],
-            },
-          ]
-        }}
+        data={tree}
+        identSize={20}
       />
     </div>
   )

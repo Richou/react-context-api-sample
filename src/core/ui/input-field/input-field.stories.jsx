@@ -35,7 +35,7 @@ export const PasswordInputField = () => {
   }
 
   return (
-    <InputField type="password" onChange={handleChange} value={passwordValue} />
+    <InputField name="password" type="password" onChange={handleChange} value={passwordValue} />
   )
 }
 
@@ -47,6 +47,6 @@ export const NumberInputField = () => {
   }
 
   return (
-    <InputField type="number" onChange={handleChange} value={numberValue} />
+    <InputField name="number" type="number" onChange={handleChange} value={numberValue} />
   )
 }

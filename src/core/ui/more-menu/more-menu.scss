@@ -1,0 +1,9 @@
+@import '../../common/styles/__variables';
+
+div.more-menu-container {
+
+  span.more-menu-button {
+    cursor: pointer;
+    padding: $primary-padding;
+  }
+}

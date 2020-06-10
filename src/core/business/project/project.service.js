@@ -1,5 +1,6 @@
 export default function ProjectService(firestore, authentication) {
 
+  console.log('firestore', firestore)
   const projectsRepository = firestore.collection('projects')
   const projectsFilesRepository = (projectId) => firestore.collection(`/projects/${projectId}/files`)
 
@@ -58,7 +59,7 @@ export default function ProjectService(firestore, authentication) {
   async function _getProjectFiles(projectId) {
     const filesSnapshots = await projectsFilesRepository(projectId).get()
 
-    return filesSnapshots.docs.map((item) => item.data())
+    return filesSnapshots.docs.map((item) => ({ ...item.data(), id: item.id }))
   }
 
   async function getProject(projectId) {
@@ -76,9 +77,15 @@ export default function ProjectService(firestore, authentication) {
     }
   }
 
+  function mapProject(project) {
+
+    return []
+  }
+
   return Object.freeze({
     findProjects,
     getProject,
     createProject,
+    mapProject,
   })
 }

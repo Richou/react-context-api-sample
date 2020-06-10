@@ -1,8 +1,9 @@
 import { Button, ButtonCard } from './button'
 import InputField from './input-field'
 import SelectField from './select-field'
-import { CodeEditor, MonacoEditor } from './code-editor'
+import CodeEditor from './code-editor'
 import Tooltip from './tooltip'
+import MoreMenu from './more-menu'
 import FullscreenDialog from './fullscreen-dialog'
 import Checkbox from './check-box'
 import TreeView from './tree-view'
@@ -14,8 +15,8 @@ export {
   InputField,
   SelectField,
   CodeEditor,
-  MonacoEditor,
   Tooltip,
+  MoreMenu,
   FullscreenDialog,
   TreeView,
 }
