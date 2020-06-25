@@ -75,12 +75,13 @@ TreeView.propTypes = {
   data: PropTypes.shape({
     title: PropTypes.string,
     items: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
+  }),
   onActions: PropTypes.func,
   identSize: PropTypes.number,
 }
 
 TreeView.defaultProps = {
+  data: null,
   onActions: () => {},
   identSize: 10,
 }

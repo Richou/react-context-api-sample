@@ -1,6 +1,7 @@
 import React from 'react'
 
 import TabsClosable from '.'
+import { boolean } from "@storybook/addon-knobs";
 
 export default {
   title: 'TabsClosable',
@@ -8,6 +9,8 @@ export default {
 }
 
 export const SimpleTabs = () => {
+  const groupId = 'TABS-CLOSABLE-01'
+
   const tabs = [
     {
       id: 'one',
@@ -42,5 +45,10 @@ export const SimpleTabs = () => {
     setActiveTabs([...activeTabs, newTab])
   }
 
-  return <TabsClosable tabs={activeTabs} onItemClose={onItemCloseHandler} onAddItem={onItemAddHandler} />
+  return <TabsClosable
+    tabs={activeTabs}
+    disabled={boolean("Disabled", false, groupId)}
+    onItemClose={onItemCloseHandler}
+    onAddItem={onItemAddHandler}
+  />
 }

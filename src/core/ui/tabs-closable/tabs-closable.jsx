@@ -6,7 +6,7 @@ import { Close as CloseIcon } from '../../icons'
 
 import './tabs-closable.scss'
 
-function TabsClosable({ tabs, onItemClose, onAddItem }) {
+function TabsClosable({ tabs, onItemClose, onAddItem, allowAdd }) {
   const [selected, setSelected] = React.useState(0)
   const [innerTabs, setInnerTabs] = React.useState(tabs)
 
@@ -41,7 +41,11 @@ function TabsClosable({ tabs, onItemClose, onAddItem }) {
   }
 
   React.useEffect(() => {
-    setInnerTabs([...tabs, { id: 'add' }])
+    if (allowAdd) {
+      setInnerTabs([...tabs, { id: 'add' }])
+    } else {
+      setInnerTabs([...tabs])
+    }
   }, [tabs])
 
   return (
@@ -57,6 +61,7 @@ function TabsClosable({ tabs, onItemClose, onAddItem }) {
 TabsClosable.propTypes = {
   onItemClose: PropTypes.func,
   selected: PropTypes.number,
+  allowAdd: PropTypes.bool,
   tabs: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
     label: PropTypes.string,
@@ -67,6 +72,7 @@ TabsClosable.propTypes = {
 TabsClosable.defaultProps = {
   onItemClose: () => {},
   onAddItem: () => {},
+  allowAdd: true,
   tabs: [],
 }
 

@@ -41,6 +41,7 @@ function CodesWorkspace({ codesProject, working, onActions }) {
         </div>
         <div className="codes-workspace-code-area">
           <TabsClosable
+            allowAdd={false}
             tabs={tabs}
           />
         </div>
