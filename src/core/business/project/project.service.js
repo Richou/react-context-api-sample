@@ -1,6 +1,4 @@
 export default function ProjectService(firestore, authentication) {
-
-  console.log('firestore', firestore)
   const projectsRepository = firestore.collection('projects')
   const projectsFilesRepository = (projectId) => firestore.collection(`/projects/${projectId}/files`)
 
@@ -78,8 +76,39 @@ export default function ProjectService(firestore, authentication) {
   }
 
   function mapProject(project) {
+    const { files = [], name, id, uid, description } = project
 
-    return []
+    const tree = {
+      id,
+      module: name,
+      type: 'directory',
+      leaf: false,
+      children: buildProjectTreeChildren(files),
+    }
+
+    return { id, name, uid, description, tree}
+  }
+
+  function buildProjectTreeChildren(files = []) {
+    const hashTable = Object.create(null)
+    files.forEach( (aData) => hashTable[aData.id] = { ...aData, children : [] } )
+    const dataTree = []
+    files.forEach((aData) => {
+      const zeData = hashTable[aData.id]
+      const baseData = {
+        id: zeData.id,
+        module: zeData.name,
+        type: (zeData.mimeType === 'directory') ? 'directory' : 'file',
+        leaf: (zeData.mimeType !== 'directory'),
+        children : zeData.children,
+      }
+      if(aData.parent) {
+        hashTable[aData.parent].children.push(baseData)
+      } else {
+        dataTree.push(baseData)
+      }
+    })
+    return dataTree
   }
 
   return Object.freeze({

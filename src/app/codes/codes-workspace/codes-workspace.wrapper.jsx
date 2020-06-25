@@ -13,15 +13,21 @@ function CodesWorkspaceWrapper({ match, codesContextHelper, projectService }) {
 
   async function fetchProjectById(id) {
     const project = await projectService.getProject(id)
+    const mapped = projectService.mapProject(project)
 
-    if (!project.error) {
-      codesContextHelper.dispatchCodesWorkspace(project)
+    if (!mapped.error) {
+      codesContextHelper.dispatchCodesWorkspace(mapped)
     }
-    return project
+    return mapped
+  }
+
+  async function onActionsHandler(type, data) {
+    console.log(type, data)
   }
 
   return (
     <CodesWorkspace
+      onActions={onActionsHandler}
       working={working}
       codesProject={codesContextHelper.context().codesWorkspace}
     />

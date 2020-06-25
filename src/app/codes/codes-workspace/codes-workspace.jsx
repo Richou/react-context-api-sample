@@ -21,19 +21,6 @@ const breadcrumb = [
   },
 ]
 
-const tree = {
-  module: 'react-ui-tree',
-  id: '01',
-  children: [{
-    module: 'dist',
-    id: '02',
-    children: [{
-      module: 'node.js',
-      id: '03',
-    }]
-  }]
-}
-
 const tabs = [
   {
     id: 'one',
@@ -42,14 +29,15 @@ const tabs = [
   },
 ]
 
-function CodesWorkspace({ codesProject, working }) {
+function CodesWorkspace({ codesProject, working, onActions }) {
   const [code, setCode] = React.useState('')
+
   return (
     <CastaneaContainer className="codes-workspace-main" menu={CastaneaMenu}>
       <CastaneaHeader breadcrumb={breadcrumb}>{codesProject.name}</CastaneaHeader>
       <div className="codes-workspace-container">
         <div className="codes-workspace-files">
-          <TreeView data={tree} />
+          <TreeView data={codesProject.tree} onActions={onActions} />
         </div>
         <div className="codes-workspace-code-area">
           <TabsClosable
@@ -63,6 +51,7 @@ function CodesWorkspace({ codesProject, working }) {
 
 CodesWorkspace.propTypes = {
   working: PropTypes.bool,
+  onActions: PropTypes.func,
   codesProjects: PropTypes.shape({
     name: PropTypes.string,
     description: PropTypes.string,
@@ -73,6 +62,7 @@ CodesWorkspace.propTypes = {
 CodesWorkspace.defaultProps = {
   working: false,
   codesProjects: {},
+  onActions: () => {},
 }
 
 export default CodesWorkspace

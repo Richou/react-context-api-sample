@@ -11,20 +11,24 @@ import './tree-view.scss'
 import { MoreMenu } from '..'
 
 function TreeView({ data, onActions, identSize }) {
-  const [tree, setTree] = React.useState(data)
+  const [tree, setTree] = React.useState(null)
+
+  React.useEffect(() => {
+    setTree(data)
+  }, [data])
 
   function buildMoreIconOptions(node) {
     const isFolder = node.hasOwnProperty('children')
 
     if (isFolder) {
-      return ['New file', 'Rename', 'Delete']
+      return ['New file', 'New directory', 'Rename', 'Delete']
     }
 
     return ['Rename', 'Delete']
   }
 
   function renderNode(node) {
-    const isFolder = node.hasOwnProperty('children')
+    const isFolder = node.type === 'directory'
     return (
       <span onDoubleClick={() => onDoubleClickHandler(node)}>
         <div className="tree-view-tool-bar">
@@ -44,7 +48,7 @@ function TreeView({ data, onActions, identSize }) {
   }
 
   function onDoubleClickHandler(node) {
-    const isFolder = node.hasOwnProperty('children')
+    const isFolder = node.type === 'directory'
     if (!isFolder) {
       onActions('treeView:openFile', { payload: node })
     }
@@ -56,12 +60,13 @@ function TreeView({ data, onActions, identSize }) {
 
   return (
     <div className="tree-view-container">
-      <Tree
+      {!tree && <span>Loading ...</span>}
+      {tree && (<Tree
         paddingLeft={identSize}
         tree={tree}
         renderNode={(node) => renderNode(node)}
         onChange={onChangeHandler}
-      />
+      />)}
     </div>
   )
 }

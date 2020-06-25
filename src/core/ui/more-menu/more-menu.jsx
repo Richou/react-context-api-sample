@@ -17,7 +17,6 @@ function MoreMenu({ options, onClick }) {
 
   const handleClose = (option) => {
     setAnchorEl(null)
-    console.log('option', option)
     onClick(option)
   }
 
