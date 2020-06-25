@@ -18,7 +18,7 @@ function TreeView({ data, onActions, identSize }) {
   }, [data])
 
   function buildMoreIconOptions(node) {
-    const isFolder = node.hasOwnProperty('children')
+    const isFolder = node.type === 'directory'
 
     if (isFolder) {
       return ['New file', 'New directory', 'Rename', 'Delete']
