@@ -19,9 +19,25 @@ export default function CodesContextHelper(ctx, dispatch) {
     })
   }
 
+  function dispatchOpenFile(file) {
+    dispatch({
+      type: CodesTypes.ADD_CODES_OPENED_FILES,
+      payload: file,
+    })
+  }
+
+  function dispatchCloseFile(id) {
+    dispatch({
+      type: CodesTypes.CLOSE_CODES_OPENED_FILES,
+      payload: { id },
+    })
+  }
+
   return Object.freeze({
     context,
     dispatchProjects,
     dispatchCodesWorkspace,
+    dispatchOpenFile,
+    dispatchCloseFile,
   })
 }

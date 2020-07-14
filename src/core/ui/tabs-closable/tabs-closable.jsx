@@ -6,7 +6,7 @@ import { Close as CloseIcon } from '../../icons'
 
 import './tabs-closable.scss'
 
-function TabsClosable({ tabs, onItemClose, onAddItem, allowAdd }) {
+function TabsClosable({ tabs, className, onItemClose, onAddItem, allowAdd }) {
   const [selected, setSelected] = React.useState(0)
   const [innerTabs, setInnerTabs] = React.useState(tabs)
 
@@ -35,7 +35,7 @@ function TabsClosable({ tabs, onItemClose, onAddItem, allowAdd }) {
     return (
       <div className="tabs-closable-item">
         <TabItem {...props} />
-        {tabs && tabs.length !== 1 && (<span onClick={() => closeItemHandler(props.data.id)}><CloseIcon size={8} /></span>)}
+        <span onClick={() => closeItemHandler(props.data.id)}><CloseIcon size={8} /></span>
       </div>
     )
   }
@@ -50,6 +50,7 @@ function TabsClosable({ tabs, onItemClose, onAddItem, allowAdd }) {
 
   return (
     <Tabs
+      className={className}
       selected={selected}
       onSelect={(item, selectedIndex) => setSelected(selectedIndex)}
       components={{ Item: ClosableItem }}
@@ -61,6 +62,7 @@ function TabsClosable({ tabs, onItemClose, onAddItem, allowAdd }) {
 TabsClosable.propTypes = {
   onItemClose: PropTypes.func,
   selected: PropTypes.number,
+  className: PropTypes.string,
   allowAdd: PropTypes.bool,
   tabs: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string,
@@ -72,6 +74,7 @@ TabsClosable.propTypes = {
 TabsClosable.defaultProps = {
   onItemClose: () => {},
   onAddItem: () => {},
+  className: '',
   allowAdd: true,
   tabs: [],
 }

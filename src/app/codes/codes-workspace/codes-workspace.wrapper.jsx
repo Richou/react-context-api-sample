@@ -21,8 +21,15 @@ function CodesWorkspaceWrapper({ match, codesContextHelper, projectService }) {
     return mapped
   }
 
-  async function onActionsHandler(type, data) {
-    console.log(type, data)
+  async function onActionsHandler(type, { payload }) {
+    if (type === 'treeView:openFile') {
+      codesContextHelper.dispatchOpenFile(payload)
+    }
+
+    if (type === 'tabs:closeFile') {
+      const { id } = payload
+      codesContextHelper.dispatchCloseFile(id)
+    }
   }
 
   return (
@@ -30,6 +37,7 @@ function CodesWorkspaceWrapper({ match, codesContextHelper, projectService }) {
       onActions={onActionsHandler}
       working={working}
       codesProject={codesContextHelper.context().codesWorkspace}
+      openedFiles={codesContextHelper.context().codesOpenedFiles}
     />
   )
 }

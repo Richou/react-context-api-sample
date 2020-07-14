@@ -30,8 +30,6 @@ function CodesWrapper({ history, projectService, codesContextHelper }) {
   }
 
   function onCodesClickedHandle(id) {
-    const selected = codesContextHelper.context().codesProjects.find((project) => project.id === id)
-    codesContextHelper.dispatchCodesWorkspace(selected)
     history.push(CODES_WORKSPACE.url.replace(':id', id))
   }
 

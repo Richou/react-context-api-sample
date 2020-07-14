@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { CastaneaContainer, CastaneaHeader } from '../../../core/components/castanea'
 
 import CastaneaMenu from '../../castanea.menu'
-import { CodeEditor, MonacoEditor, TreeView } from "../../../core/ui";
+import { CodeEditor, TreeView } from "../../../core/ui";
 
 import './codes-workspace.scss'
 import { CODES_HOME, HOME_ROUTE } from "../../castanea.routes";
@@ -20,17 +20,24 @@ const breadcrumb = [
     label: CODES_HOME.label,
   },
 ]
+function CodesWorkspace({ codesProject, working, openedFiles, onActions }) {
+  const [tabs, setTabs] = React.useState([])
 
-const tabs = [
-  {
-    id: 'one',
-    label: 'Tab one',
-    content: <p>Hello Tab One !</p>,
-  },
-]
+  React.useEffect(() => {
+    const mappedFiles = openedFiles.map(renderTab)
+    setTabs(mappedFiles)
+  }, [openedFiles])
 
-function CodesWorkspace({ codesProject, working, onActions }) {
-  const [code, setCode] = React.useState('')
+  function renderTab(item, key) {
+    return {
+      id: item.id,
+      label: item.module,
+      content:
+        <div key={key} style={{ position: 'relative', }}>
+          <CodeEditor autocomplete value={item.content} />
+        </div>,
+    }
+  }
 
   return (
     <CastaneaContainer className="codes-workspace-main" menu={CastaneaMenu}>
@@ -40,10 +47,14 @@ function CodesWorkspace({ codesProject, working, onActions }) {
           <TreeView data={codesProject.tree} onActions={onActions} />
         </div>
         <div className="codes-workspace-code-area">
-          <TabsClosable
-            allowAdd={false}
-            tabs={tabs}
-          />
+          {tabs &&
+            (<TabsClosable
+              className="codes-workspace-tabs"
+              allowAdd={false}
+              onItemClose={(id) => onActions('tabs:closeFile', { payload: { id } })}
+              tabs={tabs}
+            />
+          )}
         </div>
       </div>
     </CastaneaContainer>
@@ -53,6 +64,7 @@ function CodesWorkspace({ codesProject, working, onActions }) {
 CodesWorkspace.propTypes = {
   working: PropTypes.bool,
   onActions: PropTypes.func,
+  openedFiles: PropTypes.arrayOf(PropTypes.object),
   codesProjects: PropTypes.shape({
     name: PropTypes.string,
     description: PropTypes.string,
@@ -62,6 +74,7 @@ CodesWorkspace.propTypes = {
 
 CodesWorkspace.defaultProps = {
   working: false,
+  openedFiles: [],
   codesProjects: {},
   onActions: () => {},
 }

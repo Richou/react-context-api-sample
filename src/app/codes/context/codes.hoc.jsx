@@ -5,6 +5,7 @@ import CodesContextHelper from './codes.context'
 const initialState = {
   codesProjects: [],
   codesWorkspace: {},
+  codesOpenedFiles: [],
 };
 
 const CodesContext = React.createContext(null);

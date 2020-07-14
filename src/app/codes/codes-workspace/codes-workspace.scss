@@ -13,5 +13,11 @@ div.codes-workspace-main {
     div.codes-workspace-files {
       padding-top: $primary-padding * 2;
     }
+
+    div.codes-workspace-tabs-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
   }
 }
