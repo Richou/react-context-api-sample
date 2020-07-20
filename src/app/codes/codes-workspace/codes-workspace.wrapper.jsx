@@ -1,6 +1,6 @@
 import React from 'react'
 import { compose } from "recompose";
-import { withCodesContext } from "../context/codes.hoc";
+import { withCodesContext } from "..";
 import { withCodesDependenciesInjection } from "../context/codes.di";
 import CodesWorkspace from "./codes-workspace";
 
@@ -9,6 +9,10 @@ function CodesWorkspaceWrapper({ match, codesContextHelper, projectService }) {
 
   React.useEffect(() => {
     fetchProjectById(match.params.id).then(() => setWorking(false))
+
+    return () => {
+      codesContextHelper.dispatchClearCodesWorkspace()
+    }
   }, [])
 
   async function fetchProjectById(id) {
@@ -22,13 +26,30 @@ function CodesWorkspaceWrapper({ match, codesContextHelper, projectService }) {
   }
 
   async function onActionsHandler(type, { payload }) {
+    console.log(type, payload)
     if (type === 'treeView:openFile') {
       codesContextHelper.dispatchOpenFile(payload)
+      const openedFile = codesContextHelper.context().codesOpenedFiles.map((item) => item.id)
+      if (openedFile.length === 0) {
+        codesContextHelper.dispatchSelectedFile(0)
+      } else {
+        const indexOfOpenedFile = openedFile.indexOf(payload.id)
+        if (indexOfOpenedFile > -1) {
+          codesContextHelper.dispatchSelectedFile(indexOfOpenedFile)
+        } else {
+          codesContextHelper.dispatchSelectedFile(openedFile.length)
+        }
+      }
     }
 
     if (type === 'tabs:closeFile') {
-      const { id } = payload
-      codesContextHelper.dispatchCloseFile(id)
+      const { index } = payload
+      codesContextHelper.dispatchCloseFile(index)
+    }
+
+    if (type === 'tabs:selected') {
+      const { index } = payload
+      codesContextHelper.dispatchSelectedFile(index)
     }
   }
 
@@ -36,6 +57,7 @@ function CodesWorkspaceWrapper({ match, codesContextHelper, projectService }) {
     <CodesWorkspace
       onActions={onActionsHandler}
       working={working}
+      selectedCodeIndex={codesContextHelper.context().codesSelectedFiles}
       codesProject={codesContextHelper.context().codesWorkspace}
       openedFiles={codesContextHelper.context().codesOpenedFiles}
     />

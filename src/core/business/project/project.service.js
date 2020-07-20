@@ -1,3 +1,9 @@
+const mimeTypeMapping = {
+  'text/javascript': 'javascript',
+  'text/x-markdown': 'markdown',
+  'application/json': 'json',
+}
+
 export default function ProjectService(firestore, authentication) {
   const projectsRepository = firestore.collection('projects')
   const projectsFilesRepository = (projectId) => firestore.collection(`/projects/${projectId}/files`)
@@ -99,6 +105,8 @@ export default function ProjectService(firestore, authentication) {
         id: zeData.id,
         module: zeData.name,
         content: zeData.content,
+        mimeType: zeData.mimeType,
+        language: mapMimeTypeToLanguage(zeData.mimeType),
         type: (zeData.mimeType === 'directory') ? 'directory' : 'file',
         leaf: (zeData.mimeType !== 'directory'),
         children : zeData.children,
@@ -110,6 +118,10 @@ export default function ProjectService(firestore, authentication) {
       }
     })
     return dataTree
+  }
+
+  function mapMimeTypeToLanguage(mimeType) {
+    return mimeTypeMapping[mimeType]
   }
 
   return Object.freeze({

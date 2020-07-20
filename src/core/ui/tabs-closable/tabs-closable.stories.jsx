@@ -37,7 +37,7 @@ export const SimpleTabs = () => {
   const [activeTabs, setActiveTabs] = React.useState(tabs)
 
   function onItemCloseHandler(id) {
-    const newActiveTabs = activeTabs.filter((item) => item.id !== id)
+    const newActiveTabs = activeTabs.filter((item, index) => index !== id)
     setActiveTabs(newActiveTabs)
   }
 
@@ -49,6 +49,7 @@ export const SimpleTabs = () => {
     tabs={activeTabs}
     disabled={boolean("Disabled", false, groupId)}
     onItemClose={onItemCloseHandler}
+    selectedIndex={1}
     onAddItem={onItemAddHandler}
   />
 }

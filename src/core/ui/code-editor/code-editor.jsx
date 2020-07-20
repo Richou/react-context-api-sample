@@ -23,7 +23,6 @@ function CodeEditor({ lang, onChange, value, autocomplete, dark }) {
       value={value}
       onChange={() => {}}
       onKeyUp={((editor, event) => {
-        console.log(event)
         if (event.keyCode > 64 && event.keyCode < 91) {
           editor.showHint({ completeSingle: false })
         }
@@ -38,7 +37,7 @@ function CodeEditor({ lang, onChange, value, autocomplete, dark }) {
 }
 
 CodeEditor.propTypes = {
-  lang: PropTypes.oneOf(['text/javascript', 'application/json', 'text/x-sql']),
+  lang: PropTypes.oneOf(['text/javascript', 'application/json', 'text/x-sql', 'text/x-markdown']),
   autocomplete: PropTypes.bool,
   onChange: PropTypes.func,
   value: PropTypes.string,

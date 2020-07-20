@@ -1,81 +1,82 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Tabs, { TabItem } from '@atlaskit/tabs'
-import { Add as AddIcon } from '../../icons'
+import { Tabs, Tab } from '@material-ui/core'
 import { Close as CloseIcon } from '../../icons'
 
 import './tabs-closable.scss'
+import { Button } from "../index";
 
-function TabsClosable({ tabs, className, onItemClose, onAddItem, allowAdd }) {
-  const [selected, setSelected] = React.useState(0)
-  const [innerTabs, setInnerTabs] = React.useState(tabs)
+function TabsClosable({ tabs, selectedIndex, onItemClose, onItemSelected }) {
+  function onTabCloseHandler(event, index) {
+    event.preventDefault()
 
-  function addItemHandler() {
-    setSelected(tabs.length)
-    onAddItem()
-  }
-
-  function closeItemHandler(id) {
-    onItemClose(id)
-    const closingItemIndex = innerTabs.map((item) => item.id).indexOf(id)
-    if (closingItemIndex === selected || selected === tabs.length - 1) {
-      setSelected(tabs.length - 2)
+    if (selectedIndex >= index && selectedIndex !== 0) {
+      onItemSelected(selectedIndex - 1)
     }
-  }
-
-  const ClosableItem = (props) => {
-    if (props.data.id === 'add') {
-      return (
-        <div className="tabs-closable-item add-button">
-          <div onClick={addItemHandler}><AddIcon size={8} /></div>
-        </div>
-      )
+    if (selectedIndex === 0) {
+      onItemSelected(0)
     }
 
+    onItemClose(index)
+  }
+
+  function onTabChangedHandler(event, newValue) {
+    if (event.target.tagName !== 'DIV') {
+      event.preventDefault()
+
+      return
+    }
+
+    onItemSelected(newValue)
+  }
+
+  function renderTabLabel(tab, index) {
     return (
-      <div className="tabs-closable-item">
-        <TabItem {...props} />
-        <span onClick={() => closeItemHandler(props.data.id)}><CloseIcon size={8} /></span>
+      <div className="tabs-item-label">
+        <div>{tab.label}</div>
+        <Button className="tabs-item-close-btn" onClick={(event) => onTabCloseHandler(event, index)}>
+          <CloseIcon size={8} />
+        </Button>
       </div>
     )
   }
 
-  React.useEffect(() => {
-    if (allowAdd) {
-      setInnerTabs([...tabs, { id: 'add' }])
-    } else {
-      setInnerTabs([...tabs])
-    }
-  }, [tabs])
+  function renderTab(tab, index) {
+    return (
+      <Tab
+        component="div"
+        disableRipple
+        className="tabs-closable-item"
+        key={index}
+        label={renderTabLabel(tab, index)}
+      />
+    )
+  }
 
-  return (
-    <Tabs
-      className={className}
-      selected={selected}
-      onSelect={(item, selectedIndex) => setSelected(selectedIndex)}
-      components={{ Item: ClosableItem }}
-      tabs={innerTabs}
-    />
-  )
+  if(tabs) {
+    return (
+      <Tabs
+        onChange={(event, newValue) => onTabChangedHandler(event, newValue)}
+        TabIndicatorProps={{ className: 'tabs-closable-indicator'}}
+        value={selectedIndex}
+      >
+        {tabs.map(renderTab)}
+      </Tabs>
+    )
+  }
 }
 
 TabsClosable.propTypes = {
+  selectedIndex: PropTypes.number,
   onItemClose: PropTypes.func,
-  selected: PropTypes.number,
-  className: PropTypes.string,
-  allowAdd: PropTypes.bool,
-  tabs: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string,
-    label: PropTypes.string,
-    content: PropTypes.shape({}),
-  }))
+  onItemSelected: PropTypes.func,
+  tabs: PropTypes.arrayOf(PropTypes.shape({})),
 }
 
 TabsClosable.defaultProps = {
+  selectedIndex: 0,
   onItemClose: () => {},
-  onAddItem: () => {},
-  className: '',
-  allowAdd: true,
+  onItemSelected: () => {},
   tabs: [],
 }
 

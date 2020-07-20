@@ -24,15 +24,24 @@ const codesReducer = (state, action) => {
       }
     }
     case CodesTypes.CLOSE_CODES_OPENED_FILES: {
-      const idToClose = action.payload.id
-
-      console.log('close', idToClose)
-
-      const filtered = state.codesOpenedFiles.filter((item) => item.id !== idToClose)
+      const idxToClose = action.payload.index
+      const filtered = state.codesOpenedFiles.filter((item, index) => index !== idxToClose)
 
       return {
         ...state,
         codesOpenedFiles: filtered,
+      }
+    }
+    case CodesTypes.CLEAR_CODES_OPENED_FILES: {
+      return {
+        ...state,
+        codesOpenedFiles: [],
+      }
+    }
+    case CodesTypes.SET_CODES_SELECTED_FILES: {
+      return {
+        ...state,
+        codesSelectedFiles: action.payload.index,
       }
     }
     default:

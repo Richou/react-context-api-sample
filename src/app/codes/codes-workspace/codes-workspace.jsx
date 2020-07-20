@@ -8,7 +8,11 @@ import { CodeEditor, TreeView } from "../../../core/ui";
 
 import './codes-workspace.scss'
 import { CODES_HOME, HOME_ROUTE } from "../../castanea.routes";
-import TabsClosable from "../../../core/ui/tabs-closable";
+import TabsClosable, { TabsClosablePanel } from "../../../core/ui/tabs-closable";
+
+import 'codemirror/mode/markdown/markdown'
+import 'codemirror/mode/javascript/javascript'
+import MonacoEditor from "react-monaco-editor";
 
 const breadcrumb = [
   {
@@ -20,22 +24,52 @@ const breadcrumb = [
     label: CODES_HOME.label,
   },
 ]
-function CodesWorkspace({ codesProject, working, openedFiles, onActions }) {
+function CodesWorkspace({ codesProject, selectedCodeIndex, working, openedFiles, onActions }) {
   const [tabs, setTabs] = React.useState([])
+  const [currentEditor, setCurrentEditor] = React.useState(null)
 
   React.useEffect(() => {
     const mappedFiles = openedFiles.map(renderTab)
     setTabs(mappedFiles)
   }, [openedFiles])
 
+  React.useEffect(() => {
+    window.addEventListener('resize', handleWindowResize)
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize)
+    }
+  })
+
+  function handleWindowResize() {
+    if(currentEditor !== null) {
+      currentEditor.layout()
+    }
+  }
+
+  function editorMounted(editor, monaco) {
+    setCurrentEditor(editor)
+  }
+
   function renderTab(item, key) {
     return {
       id: item.id,
       label: item.module,
-      content:
-        <div key={key} style={{ position: 'relative', }}>
-          <CodeEditor autocomplete value={item.content} />
-        </div>,
+      content: (
+        <MonacoEditor
+          value={item.content}
+          language={item.language}
+          editorDidMount={editorMounted}
+          options={{
+            minimap: { enabled: false },
+            wordWrap: 'on',
+            automaticLayout: true,
+            scrollBeyondLastLine: false,
+          }}
+          width="100%"
+          height="100%"
+        />
+      ),
     }
   }
 
@@ -50,10 +84,25 @@ function CodesWorkspace({ codesProject, working, openedFiles, onActions }) {
           {tabs &&
             (<TabsClosable
               className="codes-workspace-tabs"
-              allowAdd={false}
-              onItemClose={(id) => onActions('tabs:closeFile', { payload: { id } })}
+              selectedIndex={selectedCodeIndex}
+              onItemSelected={(index) => onActions('tabs:selected', { payload: { index } })}
+              onItemClose={(index) => onActions('tabs:closeFile', { payload: { index } })}
               tabs={tabs}
             />
+          )}
+          {tabs && (
+            tabs.map(
+              (tab, index) => (
+                <TabsClosablePanel
+                  className="codes-workspace-panel codes-workspace-code-area-content"
+                  key={index}
+                  index={selectedCodeIndex}
+                  value={index}
+                >
+                  {tab.content}
+                </TabsClosablePanel>
+              )
+            )
           )}
         </div>
       </div>

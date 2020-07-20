@@ -30,7 +30,7 @@ function TreeView({ data, onActions, identSize }) {
   function renderNode(node) {
     const isFolder = node.type === 'directory'
     return (
-      <span onDoubleClick={() => onDoubleClickHandler(node)}>
+      <span onClick={() => onClickHandler(node)}>
         <div className="tree-view-tool-bar">
           <span className="tree-view-name">
             <Icon icon={isFolder ? node.collapsed ? folder : folderOpen : fileEmpty} />
@@ -47,7 +47,7 @@ function TreeView({ data, onActions, identSize }) {
     )
   }
 
-  function onDoubleClickHandler(node) {
+  function onClickHandler(node) {
     const isFolder = node.type === 'directory'
     if (!isFolder) {
       onActions('treeView:openFile', { payload: node })

@@ -6,6 +6,7 @@ const initialState = {
   codesProjects: [],
   codesWorkspace: {},
   codesOpenedFiles: [],
+  codesSelectedFiles: null,
 };
 
 const CodesContext = React.createContext(null);

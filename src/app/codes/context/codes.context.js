@@ -12,6 +12,11 @@ export default function CodesContextHelper(ctx, dispatch) {
     })
   }
 
+  function dispatchClearCodesWorkspace() {
+    dispatchCodesWorkspace({})
+    dispatchClearOpenedFiles()
+  }
+
   function dispatchCodesWorkspace(project) {
     dispatch({
       type: CodesTypes.SET_CODES_WORKSPACE,
@@ -26,10 +31,23 @@ export default function CodesContextHelper(ctx, dispatch) {
     })
   }
 
-  function dispatchCloseFile(id) {
+  function dispatchCloseFile(index) {
     dispatch({
       type: CodesTypes.CLOSE_CODES_OPENED_FILES,
-      payload: { id },
+      payload: { index },
+    })
+  }
+
+  function dispatchSelectedFile(index) {
+    dispatch({
+      type: CodesTypes.SET_CODES_SELECTED_FILES,
+      payload: { index },
+    })
+  }
+
+  function dispatchClearOpenedFiles() {
+    dispatch({
+      type: CodesTypes.CLEAR_CODES_OPENED_FILES,
     })
   }
 
@@ -39,5 +57,7 @@ export default function CodesContextHelper(ctx, dispatch) {
     dispatchCodesWorkspace,
     dispatchOpenFile,
     dispatchCloseFile,
+    dispatchClearCodesWorkspace,
+    dispatchSelectedFile,
   })
 }

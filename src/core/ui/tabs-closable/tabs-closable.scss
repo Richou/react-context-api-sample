@@ -1,12 +1,26 @@
-div.tabs-closable-item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  &:hover {
-    cursor: pointer;
-  }
+@import '../../common/styles/__variables';
 
-  &+div.add-button {
-    margin-left: 10px;
+div.tabs-closable-item {
+  text-transform: none;
+
+  div.tabs-item-label {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+
+    button.tabs-item-close-btn {
+      height: unset;
+      padding: 0;
+      background-color: $primary-font-color;
+      color: $secondary-font-color !important;
+
+      &:hover {
+        background-color: $disabled-color;
+      }
+    }
   }
+}
+
+span.tabs-closable-indicator {
+  background-color: $primary-color;
 }

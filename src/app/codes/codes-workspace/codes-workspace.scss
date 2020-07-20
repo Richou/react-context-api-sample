@@ -14,10 +14,15 @@ div.codes-workspace-main {
       padding-top: $primary-padding * 2;
     }
 
-    div.codes-workspace-tabs-content {
-      position: relative;
-      width: 100%;
-      height: 100%;
+    div.codes-workspace-code-area {
+      min-height: 100%;
+      display: flex;
+      flex-direction: column;
+
+      & > div.codes-workspace-code-area-content {
+        height: 100vh;
+        overflow: hidden;
+      }
     }
   }
 }
