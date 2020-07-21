@@ -51,6 +51,13 @@ export default function CodesContextHelper(ctx, dispatch) {
     })
   }
 
+  function dispatchCodeContent(value, index) {
+    dispatch({
+      type: CodesTypes.SET_CODE_CONTENT,
+      payload: { index, value }
+    })
+  }
+
   return Object.freeze({
     context,
     dispatchProjects,
@@ -59,5 +66,6 @@ export default function CodesContextHelper(ctx, dispatch) {
     dispatchCloseFile,
     dispatchClearCodesWorkspace,
     dispatchSelectedFile,
+    dispatchCodeContent,
   })
 }

@@ -5,6 +5,7 @@ const CodesTypes = {
   CLOSE_CODES_OPENED_FILES: 'codeOpenedFiles:close',
   CLEAR_CODES_OPENED_FILES: 'codeOpenedFiles:clear',
   SET_CODES_SELECTED_FILES: 'codeSelectedFiles:set',
+  SET_CODE_CONTENT: 'codeContent:set',
 }
 
 export default CodesTypes

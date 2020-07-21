@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { CastaneaContainer, CastaneaHeader } from '../../../core/components/castanea'
 
 import CastaneaMenu from '../../castanea.menu'
-import { CodeEditor, TreeView } from "../../../core/ui";
+import { TreeView } from "../../../core/ui";
 
 import './codes-workspace.scss'
 import { CODES_HOME, HOME_ROUTE } from "../../castanea.routes";
@@ -24,12 +24,12 @@ const breadcrumb = [
     label: CODES_HOME.label,
   },
 ]
-function CodesWorkspace({ codesProject, selectedCodeIndex, working, openedFiles, onActions }) {
+function CodesWorkspace({ codesProject, selectedCodeIndex, onCodeChanged, openedFiles, onActions }) {
   const [tabs, setTabs] = React.useState([])
   const [currentEditor, setCurrentEditor] = React.useState(null)
 
   React.useEffect(() => {
-    const mappedFiles = openedFiles.map(renderTab)
+    const mappedFiles = openedFiles.map(mapOpenedFileToTab)
     setTabs(mappedFiles)
   }, [openedFiles])
 
@@ -51,25 +51,14 @@ function CodesWorkspace({ codesProject, selectedCodeIndex, working, openedFiles,
     setCurrentEditor(editor)
   }
 
-  function renderTab(item, key) {
+  function handleEditorChange(value) {
+    onCodeChanged(value, selectedCodeIndex)
+  }
+
+  function mapOpenedFileToTab(item, key) {
     return {
       id: item.id,
       label: item.module,
-      content: (
-        <MonacoEditor
-          value={item.content}
-          language={item.language}
-          editorDidMount={editorMounted}
-          options={{
-            minimap: { enabled: false },
-            wordWrap: 'on',
-            automaticLayout: true,
-            scrollBeyondLastLine: false,
-          }}
-          width="100%"
-          height="100%"
-        />
-      ),
     }
   }
 
@@ -90,16 +79,29 @@ function CodesWorkspace({ codesProject, selectedCodeIndex, working, openedFiles,
               tabs={tabs}
             />
           )}
-          {tabs && (
-            tabs.map(
-              (tab, index) => (
+          {openedFiles && (
+            openedFiles.map(
+              (file, index) => (
                 <TabsClosablePanel
                   className="codes-workspace-panel codes-workspace-code-area-content"
                   key={index}
                   index={selectedCodeIndex}
                   value={index}
                 >
-                  {tab.content}
+                  <MonacoEditor
+                    value={String(file.content)}
+                    language={file.language}
+                    editorDidMount={editorMounted}
+                    onChange={handleEditorChange}
+                    options={{
+                      minimap: { enabled: false },
+                      wordWrap: 'on',
+                      automaticLayout: true,
+                      scrollBeyondLastLine: false,
+                    }}
+                    width="100%"
+                    height="100%"
+                  />
                 </TabsClosablePanel>
               )
             )
@@ -111,8 +113,8 @@ function CodesWorkspace({ codesProject, selectedCodeIndex, working, openedFiles,
 }
 
 CodesWorkspace.propTypes = {
-  working: PropTypes.bool,
   onActions: PropTypes.func,
+  onCodeChanged: PropTypes.func,
   openedFiles: PropTypes.arrayOf(PropTypes.object),
   codesProjects: PropTypes.shape({
     name: PropTypes.string,
@@ -122,10 +124,10 @@ CodesWorkspace.propTypes = {
 }
 
 CodesWorkspace.defaultProps = {
-  working: false,
   openedFiles: [],
   codesProjects: {},
   onActions: () => {},
+  onCodeChanged: () => {},
 }
 
 export default CodesWorkspace

@@ -1,4 +1,5 @@
 import CodesTypes from './codes.types'
+import * as table from '../../../core/common/utils/table'
 
 const codesReducer = (state, action) => {
   switch(action.type) {
@@ -42,6 +43,22 @@ const codesReducer = (state, action) => {
       return {
         ...state,
         codesSelectedFiles: action.payload.index,
+      }
+    }
+    case CodesTypes.SET_CODE_CONTENT: {
+      const { index, value } = action.payload
+      const { codesOpenedFiles } = state
+
+      const itemToReplace = codesOpenedFiles[index]
+      const newItem = {
+        ...itemToReplace,
+        content: value,
+      }
+      const newOpenedFiles = table.replace(codesOpenedFiles, newItem, index)
+
+      return {
+        ...state,
+        codesOpenedFiles: newOpenedFiles,
       }
     }
     default:
