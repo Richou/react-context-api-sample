@@ -2,6 +2,7 @@ const mimeTypeMapping = {
   'text/javascript': 'javascript',
   'text/x-markdown': 'markdown',
   'application/json': 'json',
+  'application/xml': 'xml',
 }
 
 export default function ProjectService(firestore, authentication) {
