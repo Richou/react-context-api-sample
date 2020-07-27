@@ -11,5 +11,11 @@ export default {
 }
 
 export const LeftTooltip = () => {
-  return (<Tooltip content={text('Tooltip value', 'Hello Tooltip !')}><Button onClick={() => {}}>Hover me !</Button></Tooltip>)
+  return (
+    <Tooltip
+      text={text('Tooltip value', 'Hello Tooltip !')}
+    >
+      <Button onClick={() => {}}>Hover me !</Button>
+    </Tooltip>
+  )
 }

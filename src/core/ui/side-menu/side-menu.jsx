@@ -1,8 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Tooltip from '@atlaskit/tooltip'
 import ActivityIcon from '@atlaskit/icon/glyph/activity'
 import { withRouter } from 'react-router'
+import { Tooltip } from '..'
 
 import './side-menu.scss'
 
@@ -15,11 +15,11 @@ function SideMenu({ menu, history, location }) {
 
   function buildMenuItem({ label, url, icon: Icon = ActivityIcon }, index) {
     return (
-      <Tooltip content={label} position="right" key={index}>
-        <li className={computeItemClass(url)} onClick={() => history.push(url)}>
+      <li key={index} className={computeItemClass(url)} onClick={() => history.push(url)}>
+        <Tooltip text={label} position="right">
           <Icon />
-        </li>
-      </Tooltip>
+        </Tooltip>
+      </li>
     )
   }
 

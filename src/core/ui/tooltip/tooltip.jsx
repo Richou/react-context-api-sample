@@ -1,16 +1,22 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { Tooltip as MuiToolTip } from '@material-ui/core'
 
-function Tooltip({ content, children }) {
+function Tooltip({ text, position, children }) {
   return (
-    <div className="castanea-tooltip">
-      <span></span>
-    </div>
+    <MuiToolTip title={text} placement={position} arrow>
+      {children}
+    </MuiToolTip>
   )
 }
 
 Tooltip.propTypes = {
-  content: PropTypes.string.isRequired
+  text: PropTypes.string.isRequired,
+  position: PropTypes.string,
+}
+
+Tooltip.defaultProps = {
+  position: 'top',
 }
 
 export default Tooltip

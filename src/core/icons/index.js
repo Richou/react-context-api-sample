@@ -4,6 +4,7 @@ import Code from './code'
 import Home from './home'
 import Info from './info'
 import More from './more'
+import Save from './save'
 import SignOut from './sign-out'
 
 
@@ -14,5 +15,6 @@ export {
   Home,
   Info,
   More,
+  Save,
   SignOut,
 }

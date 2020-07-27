@@ -4,7 +4,8 @@ import PropTypes from 'prop-types'
 import { CastaneaContainer, CastaneaHeader } from '../../../core/components/castanea'
 
 import CastaneaMenu from '../../castanea.menu'
-import { TreeView } from "../../../core/ui";
+import { Button, TreeView } from "../../../core/ui";
+import { Save as SaveIcon } from '../../../core/icons'
 
 import './codes-workspace.scss'
 import { CODES_HOME, HOME_ROUTE } from "../../castanea.routes";
@@ -65,6 +66,11 @@ function CodesWorkspace({ codesProject, selectedCodeIndex, onCodeChanged, opened
   return (
     <CastaneaContainer className="codes-workspace-main" menu={CastaneaMenu}>
       <CastaneaHeader breadcrumb={breadcrumb}>{codesProject.name}</CastaneaHeader>
+      <nav className="codes-workspace-nav">
+        <ul>
+          <li><Button className="codes-workspace-actions-btn"><SaveIcon size={18} /></Button></li>
+        </ul>
+      </nav>
       <div className="codes-workspace-container">
         <div className="codes-workspace-files">
           <TreeView data={codesProject.tree} onActions={onActions} />
