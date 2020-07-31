@@ -30,8 +30,9 @@ function TreeView({ data, onActions, identSize }) {
   function renderNode(node) {
     const isFolder = node.type === 'directory'
     return (
-      <span onClick={() => onClickHandler(node)}>
-        <div className="tree-view-tool-bar">
+      <span onDoubleClick={() => onDoubleClickHandler(node)}>
+        {node.editMode && <input type="text" value={node.module} />}
+        {!node.editMode && (<div className="tree-view-tool-bar">
           <span className="tree-view-name">
             <Icon icon={isFolder ? node.collapsed ? folder : folderOpen : fileEmpty} />
             {node.module}
@@ -42,12 +43,12 @@ function TreeView({ data, onActions, identSize }) {
               options={buildMoreIconOptions(node)}
             />
           </div>
-        </div>
+        </div>)}
       </span>
     )
   }
 
-  function onClickHandler(node) {
+  function onDoubleClickHandler(node) {
     const isFolder = node.type === 'directory'
     if (!isFolder) {
       onActions('treeView:openFile', { payload: node })

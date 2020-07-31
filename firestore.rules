@@ -12,8 +12,7 @@ service cloud.firestore {
       match /files/{fileId} {
         allow read, create: if request.auth != null;
         allow delete, update: if request.auth != null
-                      && request.resource.data.name == resource.data.name
-                      && request.resource.data.uid == request.auth.uid;
+                      && get(/databases/$(database)/documents/projects/$(projectId)).data.uid == request.auth.uid;
       }
     }
   }

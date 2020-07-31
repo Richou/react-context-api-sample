@@ -6,6 +6,7 @@ import CodesWorkspace from "./codes-workspace";
 
 function CodesWorkspaceWrapper({ match, codesContextHelper, projectService }) {
   const [working, setWorking] = React.useState(true)
+  const { codesOpenedFiles } = codesContextHelper.context()
 
   React.useEffect(() => {
     fetchProjectById(match.params.id).then(() => setWorking(false))
@@ -14,6 +15,12 @@ function CodesWorkspaceWrapper({ match, codesContextHelper, projectService }) {
       codesContextHelper.dispatchClearCodesWorkspace()
     }
   }, [])
+
+  React.useEffect(() => {
+    if (codesOpenedFiles?.length === 0) {
+      codesContextHelper.dispatchSelectedFile(null)
+    }
+  }, [codesOpenedFiles])
 
   async function fetchProjectById(id) {
     const project = await projectService.getProject(id)
@@ -56,11 +63,25 @@ function CodesWorkspaceWrapper({ match, codesContextHelper, projectService }) {
     codesContextHelper.dispatchCodeContent(value, index)
   }
 
+  async function onSaveFileHandler(newValue) {
+    if (codesContextHelper.context().codesSelectedFiles !== null) {
+      const { codesSelectedFiles, codesOpenedFiles } = codesContextHelper.context()
+
+      const toSaveFile = codesOpenedFiles[codesSelectedFiles]
+
+      // Must do a trick like that, don't know why but, when method is trigger by shortcut, the value is not up-to-date.
+      const weirdStuff = newValue ? { ...toSaveFile, content: newValue } : toSaveFile
+
+      await projectService.saveFile(match.params.id, weirdStuff)
+    }
+  }
+
   return (
     <CodesWorkspace
       onActions={onActionsHandler}
       onCodeChanged={onCodeChangedHandler}
       working={working}
+      onSaveFile={onSaveFileHandler}
       selectedCodeIndex={codesContextHelper.context().codesSelectedFiles}
       codesProject={codesContextHelper.context().codesWorkspace}
       openedFiles={codesContextHelper.context().codesOpenedFiles}

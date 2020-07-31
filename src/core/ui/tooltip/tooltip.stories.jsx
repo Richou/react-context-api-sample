@@ -14,8 +14,9 @@ export const LeftTooltip = () => {
   return (
     <Tooltip
       text={text('Tooltip value', 'Hello Tooltip !')}
+      position="right"
     >
-      <Button onClick={() => {}}>Hover me !</Button>
+      <span><Button onClick={() => {}}>Hover me !</Button></span>
     </Tooltip>
   )
 }

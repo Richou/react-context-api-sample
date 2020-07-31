@@ -15,11 +15,11 @@ function SideMenu({ menu, history, location }) {
 
   function buildMenuItem({ label, url, icon: Icon = ActivityIcon }, index) {
     return (
-      <li key={index} className={computeItemClass(url)} onClick={() => history.push(url)}>
-        <Tooltip text={label} position="right">
-          <Icon />
-        </Tooltip>
-      </li>
+      <Tooltip key={index} text={label} position="right">
+        <li className={computeItemClass(url)} onClick={() => history.push(url)}>
+          <span><Icon /></span>
+        </li>
+      </Tooltip>
     )
   }
 

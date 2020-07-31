@@ -107,6 +107,7 @@ export default function ProjectService(firestore, authentication) {
         module: zeData.name,
         content: zeData.content,
         mimeType: zeData.mimeType,
+        parent: zeData.parent,
         language: mapMimeTypeToLanguage(zeData.mimeType),
         type: (zeData.mimeType === 'directory') ? 'directory' : 'file',
         leaf: (zeData.mimeType !== 'directory'),
@@ -125,10 +126,23 @@ export default function ProjectService(firestore, authentication) {
     return mimeTypeMapping[mimeType]
   }
 
+  async function saveFile(projectId, fileToSave) {
+    try {
+      const { id, content } = fileToSave
+
+      await projectsFilesRepository(projectId).doc(id).update({ content })
+
+      return true
+    } catch (error) {
+      return false
+    }
+  }
+
   return Object.freeze({
     findProjects,
     getProject,
     createProject,
     mapProject,
+    saveFile,
   })
 }
