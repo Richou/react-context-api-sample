@@ -9,6 +9,7 @@
     "@atlaskit/droplist": "^10.0.4",
     "@atlaskit/icon": "^20.0.0",
     "@atlaskit/item": "^11.0.2",
+    "@atlaskit/modal-dialog": "^11.1.0",
     "@atlaskit/select": "^11.0.5",
     "@atlaskit/spinner": "^12.1.6",
     "@atlaskit/table-tree": "^8.0.3",

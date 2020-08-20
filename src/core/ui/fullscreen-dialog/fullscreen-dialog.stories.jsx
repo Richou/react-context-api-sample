@@ -7,7 +7,7 @@ export default {
   component: FullscreenDialog,
 }
 
-export const SimpleButtonCard = () => {
+export const SimpleFullscreenDialog = () => {
   const [open, setOpen] = React.useState(false)
 
   function handleOpen() {

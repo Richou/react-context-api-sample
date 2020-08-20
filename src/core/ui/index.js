@@ -5,6 +5,7 @@ import CodeEditor from './code-editor'
 import Tooltip from './tooltip'
 import MoreMenu from './more-menu'
 import FullscreenDialog from './fullscreen-dialog'
+import SimpleDialog from './simple-dialog'
 import Checkbox from './check-box'
 import TreeView from './tree-view'
 
@@ -18,5 +19,6 @@ export {
   Tooltip,
   MoreMenu,
   FullscreenDialog,
+  SimpleDialog,
   TreeView,
 }

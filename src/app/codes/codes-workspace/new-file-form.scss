@@ -1,0 +1,16 @@
+@import '../../../core/common/styles/__variables';
+
+form.new-item {
+  display: flex;
+  flex-direction: column;
+
+  div.form-action-buttons {
+    margin-top: $primary-padding * 2;
+    display: flex;
+    justify-content: flex-end;
+
+    button {
+      margin-left: $primary-padding * 2;
+    }
+  }
+}

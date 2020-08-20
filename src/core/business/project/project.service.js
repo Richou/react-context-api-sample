@@ -1,9 +1,4 @@
-const mimeTypeMapping = {
-  'text/javascript': 'javascript',
-  'text/x-markdown': 'markdown',
-  'application/json': 'json',
-  'application/xml': 'xml',
-}
+import { getLanguageFromMimeType, getMimeTypeFromFileName } from "../../common/utils/mime-types";
 
 export default function ProjectService(firestore, authentication) {
   const projectsRepository = firestore.collection('projects')
@@ -108,7 +103,7 @@ export default function ProjectService(firestore, authentication) {
         content: zeData.content,
         mimeType: zeData.mimeType,
         parent: zeData.parent,
-        language: mapMimeTypeToLanguage(zeData.mimeType),
+        language: getLanguageFromMimeType(zeData.mimeType),
         type: (zeData.mimeType === 'directory') ? 'directory' : 'file',
         leaf: (zeData.mimeType !== 'directory'),
         children : zeData.children,
@@ -120,10 +115,6 @@ export default function ProjectService(firestore, authentication) {
       }
     })
     return dataTree
-  }
-
-  function mapMimeTypeToLanguage(mimeType) {
-    return mimeTypeMapping[mimeType]
   }
 
   async function saveFile(projectId, fileToSave) {
@@ -138,11 +129,29 @@ export default function ProjectService(firestore, authentication) {
     }
   }
 
+  async function newItem(projectId, itemRequest) {
+    const mimeType = getMimeTypeFromFileName(itemRequest.name)
+
+    const newItem = {
+      ...itemRequest,
+      content: '',
+      mimeType,
+    }
+
+    const createdNewItem = await projectsFilesRepository(projectId).add(newItem)
+
+    return {
+      ...newItem,
+      id: createdNewItem.id,
+    }
+  }
+
   return Object.freeze({
     findProjects,
     getProject,
     createProject,
     mapProject,
     saveFile,
+    newItem,
   })
 }

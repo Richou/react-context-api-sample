@@ -55,6 +55,7 @@ function CodesWorkspace({
   function editorMounted(editor, monaco) {
     setCurrentEditor(editor)
     addSaveActionToEditor(editor, monaco)
+    addCloseTabActionToEditor(editor, monaco)
   }
 
   function addSaveActionToEditor(editor, monaco) {
@@ -67,6 +68,22 @@ function CodesWorkspace({
       contextMenuGroupId: 'navigation',
       contextMenuOrder: 1.5,
       run: (editor) => onSaveFile(editor.getValue()),
+    })
+  }
+
+  function addCloseTabActionToEditor(editor, monaco) {
+    editor.addAction({
+      id: 'close-tab',
+      label: 'Close',
+      keybindings: [
+        monaco.KeyMod.WinCtrl | monaco.KeyCode.KEY_W,
+      ],
+      contextMenuGroupId: 'navigation',
+      contextMenuOrder: 1.5,
+      run: (editor) => {
+        onActions('tabs:selected', { payload: { index: selectedCodeIndex === 0 ? 0 : selectedCodeIndex - 1 } })
+        onActions('tabs:closeFile', { payload: { index: selectedCodeIndex } })
+      },
     })
   }
 

@@ -30,6 +30,12 @@ function TabsClosable({ tabs, selectedIndex, onItemClose, onItemSelected }) {
     onItemSelected(newValue)
   }
 
+  function onMouseDownHandler(event, index) {
+    if (event.button === 1) {
+      onTabCloseHandler(event, index)
+    }
+  }
+
   function renderTabLabel(tab, index) {
     return (
       <div className="tabs-item-label">
@@ -47,6 +53,7 @@ function TabsClosable({ tabs, selectedIndex, onItemClose, onItemSelected }) {
         component="div"
         disableRipple
         className="tabs-closable-item"
+        onMouseDown={(event) => onMouseDownHandler(event, index)}
         key={index}
         label={renderTabLabel(tab, index)}
       />

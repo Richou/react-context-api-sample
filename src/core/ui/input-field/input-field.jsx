@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import Textfield from '@atlaskit/textfield'
 
+import './input-field.scss'
+
 function InputField(props) {
   const {
     name,
@@ -14,6 +16,7 @@ function InputField(props) {
     error,
     disabled,
     label,
+    className,
   } = props
 
   function renderLabel() {
@@ -22,7 +25,7 @@ function InputField(props) {
   }
 
   return (
-    <>
+    <div className={className ? `${className} input-field-container` : 'input-field-container'}>
       {label && (<label htmlFor={name}>{renderLabel()}</label> )}
       <Textfield
         name={name}
@@ -34,8 +37,9 @@ function InputField(props) {
         isDisabled={disabled}
         width={size}
         placeholder={placeholder}
+        autoComplete="off"
       />
-    </>
+    </div>
   )
 }
 
@@ -50,6 +54,7 @@ InputField.propTypes = {
   error: PropTypes.bool,
   disabled: PropTypes.bool,
   label: PropTypes.string,
+  className: PropTypes.string,
 }
 
 InputField.defaultProps = {
@@ -61,6 +66,7 @@ InputField.defaultProps = {
   error: false,
   disabled: false,
   label: null,
+  className: null,
 }
 
 export default InputField
