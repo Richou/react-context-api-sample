@@ -14,7 +14,6 @@ const codesReducer = (state, action) => {
         codesWorkspace: action.payload,
       }
     case CodesTypes.ADD_CODES_OPENED_FILES: {
-      console.log(action.payload)
       const openedIds = state.codesOpenedFiles.map((item) => item.id)
       if (openedIds.includes(action.payload.id)) {
         return { ...state }

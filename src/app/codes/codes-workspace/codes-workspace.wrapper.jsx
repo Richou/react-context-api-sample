@@ -34,8 +34,10 @@ function CodesWorkspaceWrapper({ match, codesContextHelper, projectService }) {
     const createdItem = await projectService.newItem(match.params.id, { ...inputs, ...newItemContext})
 
     await fetchProjectById(match.params.id)
-    codesContextHelper.dispatchOpenFile({ ...createdItem, module: createdItem.name })
-    codesContextHelper.dispatchSelectedFile(codesContextHelper.context().codesOpenedFiles.length)
+    if (createdItem.mimeType !== 'directory') {
+      codesContextHelper.dispatchOpenFile({ ...createdItem, module: createdItem.name })
+      codesContextHelper.dispatchSelectedFile(codesContextHelper.context().codesOpenedFiles.length)
+    }
     setOpenNewFileModal(false)
   }
 

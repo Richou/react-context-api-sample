@@ -1,7 +1,7 @@
 import React from 'react'
 import Codes from './codes'
 import { compose } from 'recompose'
-import { withCodesContext } from '../context/codes.hoc'
+import { withCodesContext } from '..'
 import { withRouter } from "react-router";
 import { CODES_WORKSPACE } from "../../castanea.routes";
 import { withCodesDependenciesInjection } from "../context/codes.di";

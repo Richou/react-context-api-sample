@@ -130,11 +130,15 @@ export default function ProjectService(firestore, authentication) {
   }
 
   async function newItem(projectId, itemRequest) {
-    const mimeType = getMimeTypeFromFileName(itemRequest.name)
+    const mimeType = getMimeTypeFromItem(itemRequest)
+
+    const content = itemRequest.type === 'file' ? { content: '' } : {}
+    const parent = itemRequest.parent ? { parent: itemRequest.parent } : {}
 
     const newItem = {
-      ...itemRequest,
-      content: '',
+      name: itemRequest.name,
+      ...parent,
+      ...content,
       mimeType,
     }
 
@@ -144,6 +148,11 @@ export default function ProjectService(firestore, authentication) {
       ...newItem,
       id: createdNewItem.id,
     }
+  }
+
+  function getMimeTypeFromItem(item) {
+    if (item.type === 'directory') return 'directory'
+    return getMimeTypeFromFileName(item.name)
   }
 
   return Object.freeze({

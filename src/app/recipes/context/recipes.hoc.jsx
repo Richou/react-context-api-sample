@@ -1,0 +1,21 @@
+import React from 'react'
+import recipesReducer from './recipes.reducer'
+import RecipesContextHelper from './recipes.context'
+
+const initialState = {
+  recipes: [],
+}
+
+const RecipesContext = React.createContext(null);
+
+export const RecipesProvider = props => {
+  const [state, dispatch] = React.useReducer(recipesReducer, initialState);
+  const value = [state, dispatch];
+  return <RecipesContext.Provider value={value}>{props.children}</RecipesContext.Provider>
+}
+
+export const withRecipesContext = Component => ({ ...props }) => {
+  const [state, dispatch] = React.useContext(RecipesContext);
+  const recipesContextHelper = RecipesContextHelper(state, dispatch);
+  return (<Component {...props} recipesContextHelper={recipesContextHelper} />)
+}
