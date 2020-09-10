@@ -11,7 +11,7 @@ import './codes.scss'
 
 import { ButtonCard, FullscreenDialog } from "../../../core/ui";
 import CodesForm from "./codes-form";
-import { HOME_ROUTE } from "../../castanea.routes";
+import { CODES_HOME, HOME_ROUTE } from "../../castanea.routes";
 import { Link } from "react-router-dom";
 
 const breadcrumb = [
@@ -46,7 +46,7 @@ function Codes({ codesProjects, onCodesCreate, onCodesClicked, loadings }) {
 
   return (
     <CastaneaContainer menu={CastaneaMenu}>
-      <CastaneaHeader breadcrumb={breadcrumb}>Codes Space</CastaneaHeader>
+      <CastaneaHeader breadcrumb={breadcrumb}>{CODES_HOME.label}</CastaneaHeader>
       <div className="codes-space-projects">
         <ButtonCard onClick={handleClickOpen}>
           <div className="add-project">
@@ -55,7 +55,7 @@ function Codes({ codesProjects, onCodesCreate, onCodesClicked, loadings }) {
           </div>
         </ButtonCard>
         {codesProjects && codesProjects.map((project) => (
-          <Link className="code-space-link" to={`/codes/${project.id}`} key={project.id}>
+          <Link className="code-space-link" to={`${CODES_HOME.url}/${project.id}`} key={project.id}>
             <ButtonCard className="project-btn">
               <header>{project.name}</header>
               <section>{project.description}</section>
