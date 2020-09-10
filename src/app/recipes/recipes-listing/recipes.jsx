@@ -2,7 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { CastaneaContainer, CastaneaHeader } from "../../../core/components/castanea";
 import CastaneaMenu from "../../castanea.menu";
-import { HOME_ROUTE } from "../../castanea.routes";
+import { HOME_ROUTE, RECIPES_HOME } from "../../castanea.routes";
+import { Link } from "react-router-dom";
+
+import './recipes.scss'
+import { Button } from "../../../core/ui";
 
 const breadcrumb = [
   {
@@ -12,10 +16,30 @@ const breadcrumb = [
 ]
 
 function Recipes({ recipes }) {
+
+  function handleCreateRecipe() {
+
+  }
+
   return (
     <CastaneaContainer menu={CastaneaMenu}>
-      <CastaneaHeader breadcrumb={breadcrumb}>Codes Space</CastaneaHeader>
-      <h1>Recipes</h1>
+      <CastaneaHeader breadcrumb={breadcrumb}>{RECIPES_HOME.label}</CastaneaHeader>
+      <nav className="recipes-actions">
+        <Button onClick={handleCreateRecipe}>Ajouter une recette</Button>
+      </nav>
+      <div className="recipes-container">
+        {recipes?.length > 0 && (
+          <ul>
+            {recipes.map((item, key) => (
+              <li key={key}>
+                <Link to={`${RECIPES_HOME.url}/${item.id}`}>
+                  {item.title}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
     </CastaneaContainer>
   )
 }

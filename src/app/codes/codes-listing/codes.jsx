@@ -12,6 +12,7 @@ import './codes.scss'
 import { ButtonCard, FullscreenDialog } from "../../../core/ui";
 import CodesForm from "./codes-form";
 import { HOME_ROUTE } from "../../castanea.routes";
+import { Link } from "react-router-dom";
 
 const breadcrumb = [
   {
@@ -54,11 +55,13 @@ function Codes({ codesProjects, onCodesCreate, onCodesClicked, loadings }) {
           </div>
         </ButtonCard>
         {codesProjects && codesProjects.map((project) => (
-          <ButtonCard className="project-btn" key={project.id} onClick={() => onCodesClicked(project.id)}>
-            <header>{project.name}</header>
-            <section>{project.description}</section>
-            <footer>{renderFilesNumber(project.files)}</footer>
-          </ButtonCard>
+          <Link className="code-space-link" to={`/codes/${project.id}`} key={project.id}>
+            <ButtonCard className="project-btn">
+              <header>{project.name}</header>
+              <section>{project.description}</section>
+              <footer>{renderFilesNumber(project.files)}</footer>
+            </ButtonCard>
+          </Link>
         ))}
       </div>
       <FullscreenDialog open={open} handleClose={handleClose}>

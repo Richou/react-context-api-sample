@@ -16,7 +16,7 @@ export default function ProjectService(firestore, authentication) {
 
     return projectsFilesRepository(createdProject.id).add({
       name: 'readme.md',
-      mimeType: 'text/markdown',
+      mimeType: 'text/x-markdown',
       content: `# ${project.name}`,
     })
   }
@@ -72,7 +72,6 @@ export default function ProjectService(firestore, authentication) {
 
       return { ...baseItem, files }
     } catch (error) {
-      console.log(error)
       return { error }
     }
   }

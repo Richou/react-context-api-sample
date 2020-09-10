@@ -6,3 +6,4 @@ export const LOGOUT_ROUTE = { url: '/logout', label: 'Logout' }
 export const CODES_HOME = { url: '/codes', label: 'Codes Space' }
 export const CODES_WORKSPACE = {url: '/codes/:id' }
 export const RECIPES_HOME =  { url: '/cooking-recipes', label: 'Cooking Recipes' }
+export const RECIPES_SHEET = { url: '/cooking-recipes/:id' }

@@ -7,6 +7,11 @@ div.codes-space-projects {
   display: flex;
   flex-wrap: wrap;
 
+  a.code-space-link {
+    color: unset;
+    text-decoration: none;
+  }
+
   div.button-card {
     margin: 10px;
 
@@ -34,6 +39,5 @@ div.codes-space-projects {
       align-items: center;
     }
   }
-
 }
 

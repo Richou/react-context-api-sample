@@ -20,12 +20,13 @@ function ButtonCard({ onClick, disabled, children, className }) {
 }
 
 ButtonCard.propTypes = {
-  onClick: PropTypes.func.isRequired,
+  onClick: PropTypes.func,
   disabled: PropTypes.bool,
   className: PropTypes.string,
 }
 
 ButtonCard.defaultProps = {
+  onClick: () => {},
   children: null,
   disabled: false,
   className: null,

@@ -6,8 +6,21 @@ import { withRecipesDependenciesInjection } from "../context/recipes.di";
 import { withRouter } from "react-router";
 
 function RecipesWrapper({ recipesContextHelper, recipesService }) {
+
+  React.useEffect(() => {
+    getRecipes()
+  }, [])
+
+  async function getRecipes() {
+    const response = await recipesService.findRecipes()
+
+    recipesContextHelper.dispatchRecipes(response)
+  }
+
   return (
-    <Recipes />
+    <Recipes
+      recipes={recipesContextHelper.context().recipes}
+    />
   )
 }
 

@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 import './app.scss'
-import { ABOUT_ROUTE, CODES_HOME, CODES_WORKSPACE, HOME_ROUTE, LOGOUT_ROUTE, RECIPES_HOME, SIGN_UP_ROUTE } from './castanea.routes'
+import { ABOUT_ROUTE, CODES_HOME, CODES_WORKSPACE, HOME_ROUTE, LOGOUT_ROUTE, RECIPES_HOME, RECIPES_SHEET, SIGN_UP_ROUTE } from './castanea.routes'
 import HomeWrapper from './home'
 import CodesWrapper from './codes'
 import SignUpWrapper from './authentication/sign-up'
@@ -13,6 +13,7 @@ import AppContexts from './app.contexts'
 import CodesWorkspaceWrapper from './codes/codes-workspace/codes-workspace.wrapper'
 import AboutWrapper from './about/about.wrapper'
 import RecipesWrapper from "./recipes/recipes-listing/recipes.wrapper";
+import RecipesSheetWrapper from "./recipes/recipes-sheet";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
           <SecuredRoute exact path={LOGOUT_ROUTE.url} component={LogoutWrapper} redirectTo={SIGN_UP_ROUTE.url} />
           <SecuredRoute exact path={CODES_WORKSPACE.url} component={CodesWorkspaceWrapper} redirectTo={SIGN_UP_ROUTE.url} />
           <SecuredRoute exact path={RECIPES_HOME.url} component={RecipesWrapper} redirectTo={SIGN_UP_ROUTE.url} />
+          <SecuredRoute exact path={RECIPES_SHEET.url} component={RecipesSheetWrapper} redirectTo={SIGN_UP_ROUTE.url} />
         </Switch>
       </Router>
     </AppContexts>
