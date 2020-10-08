@@ -1,12 +1,13 @@
 import React from 'react'
 import Codes from './codes'
 import { compose } from 'recompose'
-import { withCodesContext } from '..'
+import { useCodesContext } from '..'
 import { withRouter } from "react-router";
 import { CODES_WORKSPACE } from "../../castanea.routes";
 import { withCodesDependenciesInjection } from "../context/codes.di";
 
-function CodesWrapper({ history, projectService, codesContextHelper }) {
+function CodesWrapper({ history, projectService }) {
+  const codesContextHelper = useCodesContext()
   const [, setWorking] = React.useState(false)
   const [creating, setCreating] = React.useState(false)
 
@@ -44,7 +45,6 @@ function CodesWrapper({ history, projectService, codesContextHelper }) {
 }
 
 export default compose(
-  withCodesContext,
   withCodesDependenciesInjection,
   withRouter,
 )(CodesWrapper)

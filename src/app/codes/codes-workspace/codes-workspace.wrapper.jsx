@@ -1,12 +1,13 @@
 import React from 'react'
 import { compose } from "recompose";
-import { withCodesContext } from "..";
+import { useCodesContext } from "..";
 import { withCodesDependenciesInjection } from "../context/codes.di";
 import CodesWorkspace from "./codes-workspace";
 import { SimpleDialog } from "../../../core/ui";
 import NewFileForm from "./new-file-form";
 
-function CodesWorkspaceWrapper({ match, codesContextHelper, projectService }) {
+function CodesWorkspaceWrapper({ match, projectService }) {
+  const codesContextHelper = useCodesContext()
   const [working, setWorking] = React.useState(true)
   const [openNewFileModal, setOpenNewFileModal] = React.useState(false)
   const [newItemContext, setNewItemContext] = React.useState(null)
@@ -131,6 +132,5 @@ function CodesWorkspaceWrapper({ match, codesContextHelper, projectService }) {
 }
 
 export default compose(
-  withCodesContext,
   withCodesDependenciesInjection,
 )(CodesWorkspaceWrapper)

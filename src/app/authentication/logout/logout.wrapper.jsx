@@ -6,8 +6,8 @@ import { withRouter } from 'react-router'
 import { HOME_ROUTE } from '../../castanea.routes'
 import { compose } from "recompose";
 
-import { withCodesContext } from "../../codes";
-import { withRecipesContext } from "../../recipes/context/recipes.hoc";
+import { useCodesContext } from "../../codes";
+import { useRecipesContext } from "../../recipes";
 
 const firebase = Firebase()
 const authenticationService = AuthenticationService(firebase)
@@ -16,7 +16,10 @@ async function onLogout() {
   return authenticationService.doLogout()
 }
 
-function LogoutWrapper({ history, codesContextHelper, recipesContextHelper }) {
+function LogoutWrapper({ history }) {
+  const codesContextHelper = useCodesContext()
+  const recipesContextHelper = useRecipesContext()
+
   React.useEffect(() => {
     onLogout().then(() => history.push(HOME_ROUTE.url))
     codesContextHelper.dispatchProjects([])
@@ -30,6 +33,4 @@ function LogoutWrapper({ history, codesContextHelper, recipesContextHelper }) {
 
 export default compose(
   withRouter,
-  withCodesContext,
-  withRecipesContext,
 )(LogoutWrapper)

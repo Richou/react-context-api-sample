@@ -1,12 +1,17 @@
 import React from 'react'
 import Home from './home'
-import { withCodesContext } from "../codes";
-import { withCodesDependenciesInjection } from "../codes/context/codes.di";
 import { compose } from "recompose";
-import { withRecipesContext } from "../recipes/context/recipes.hoc";
+
+import { useCodesContext } from "../codes";
+import { useRecipesContext } from "../recipes";
+
+import { withCodesDependenciesInjection } from "../codes/context/codes.di";
 import { withRecipesDependenciesInjection } from "../recipes/context/recipes.di";
 
-function HomeWrapper({ projectService, codesContextHelper, recipesService, recipesContextHelper }) {
+function HomeWrapper({ projectService, recipesService }) {
+  const codesContextHelper = useCodesContext()
+  const recipesContextHelper = useRecipesContext()
+
   React.useEffect(() => {
     getProjects()
     getRecipes()
@@ -33,8 +38,6 @@ function HomeWrapper({ projectService, codesContextHelper, recipesService, recip
 }
 
 export default compose(
-  withCodesContext,
   withCodesDependenciesInjection,
-  withRecipesContext,
   withRecipesDependenciesInjection,
 )(HomeWrapper)

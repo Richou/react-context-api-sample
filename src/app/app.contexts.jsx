@@ -1,6 +1,6 @@
 import React from 'react'
-import { CodesProvider } from './codes/context/codes.hoc'
-import { RecipesProvider } from "./recipes/context/recipes.hoc";
+import { CodesProvider } from './codes/context/codes.context'
+import { RecipesProvider } from "./recipes/context/recipes.context";
 
 function combine(...providers) {
   if (providers.length === 1) {

@@ -3,17 +3,14 @@ import PropTypes from 'prop-types'
 import { compose } from "recompose";
 
 import { withRecipesDependenciesInjection } from "../context/recipes.di";
-import { withRecipesContext } from "../context/recipes.hoc";
 import RecipesSheet from "./recipes-sheet";
+import { useRecipesContext } from "..";
 
-function RecipesSheetWrapper({ recipesContextHelper, recipesService, match }) {
+function RecipesSheetWrapper({ recipesService, match }) {
+  const recipesContextHelper = useRecipesContext()
   const [recipe, setRecipe] = React.useState({})
 
-  React.useEffect(() => {
-    fetchRecipeById(match.params.id)
-  }, [])
-
-  async function fetchRecipeById(recipeId) {
+  const fetchRecipeById = React.useCallback(async (recipeId) => {
     const found = recipesContextHelper.context().recipes?.find((item) => item.id === recipeId)
 
     if (found) {
@@ -25,7 +22,11 @@ function RecipesSheetWrapper({ recipesContextHelper, recipesService, match }) {
         setRecipe(fetched)
       }
     }
-  }
+  }, [recipesContextHelper, recipesService])
+
+  React.useEffect(() => {
+    fetchRecipeById(match.params.id)
+  }, [fetchRecipeById, match.params.id])
 
   return (
     <RecipesSheet recipe={recipe} />
@@ -33,11 +34,9 @@ function RecipesSheetWrapper({ recipesContextHelper, recipesService, match }) {
 }
 
 RecipesSheetWrapper.propTypes = {
-  recipesContextHelper: PropTypes.shape({}).isRequired,
   recipesService: PropTypes.shape({}).isRequired,
 }
 
 export default compose(
-  withRecipesContext,
   withRecipesDependenciesInjection,
 )(RecipesSheetWrapper)

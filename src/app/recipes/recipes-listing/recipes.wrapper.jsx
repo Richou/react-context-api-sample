@@ -1,31 +1,49 @@
 import React from 'react'
 import Recipes from "./recipes";
 import { compose } from "recompose";
-import { withRecipesContext } from "../context/recipes.hoc";
+import { useRecipesContext } from "..";
 import { withRecipesDependenciesInjection } from "../context/recipes.di";
 import { withRouter } from "react-router";
+import { FullscreenDialog } from "../../../core/ui";
+import RecipesForm from "./recipes-form";
 
-function RecipesWrapper({ recipesContextHelper, recipesService }) {
+function RecipesWrapper({ recipesService }) {
+  const recipesContextHelper = useRecipesContext()
+  const [createRecipePopupOpen, setCreateRecipePopupOpen] = React.useState(false)
+  const [working, setWorking] = React.useState(false)
 
-  React.useEffect(() => {
-    getRecipes()
-  }, [])
-
-  async function getRecipes() {
+  const getRecipes = React.useCallback(async () => {
     const response = await recipesService.findRecipes()
 
     recipesContextHelper.dispatchRecipes(response)
-  }
+  }, [recipesContextHelper, recipesService])
+
+  React.useEffect(() => {
+    getRecipes()
+  }, [getRecipes])
+
+  const createRecipeHandler = React.useCallback(() => {
+    setCreateRecipePopupOpen(true)
+  }, [])
+
+  const onCreateNewRecipeHandler = React.useCallback(() => {
+    setWorking(true)
+  }, [])
 
   return (
-    <Recipes
-      recipes={recipesContextHelper.context().recipes}
-    />
+    <>
+      <Recipes
+        recipes={recipesContextHelper.context().recipes}
+        onCreateRecipeClicked={createRecipeHandler}
+      />
+      <FullscreenDialog handleClose={() => setCreateRecipePopupOpen(false)} open={createRecipePopupOpen} title="Ajouter une recette">
+        <RecipesForm onSubmit={onCreateNewRecipeHandler} working={working} />
+      </FullscreenDialog>
+    </>
   )
 }
 
 export default compose(
-  withRecipesContext,
   withRecipesDependenciesInjection,
   withRouter,
 )(RecipesWrapper)

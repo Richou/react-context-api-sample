@@ -15,17 +15,13 @@ const breadcrumb = [
   },
 ]
 
-function Recipes({ recipes }) {
-
-  function handleCreateRecipe() {
-
-  }
+function Recipes({ recipes, onCreateRecipeClicked }) {
 
   return (
     <CastaneaContainer menu={CastaneaMenu}>
       <CastaneaHeader breadcrumb={breadcrumb}>{RECIPES_HOME.label}</CastaneaHeader>
       <nav className="recipes-actions">
-        <Button onClick={handleCreateRecipe}>Ajouter une recette</Button>
+        <Button onClick={onCreateRecipeClicked}>Ajouter une recette</Button>
       </nav>
       <div className="recipes-container">
         {recipes?.length > 0 && (
@@ -46,10 +42,12 @@ function Recipes({ recipes }) {
 
 Recipes.propTypes = {
   recipes: PropTypes.arrayOf(PropTypes.object),
+  onCreateRecipeClicked: PropTypes.func,
 }
 
 Recipes.defaultProps = {
   recipes: [],
+  onCreateRecipeClicked: () => {},
 }
 
 export default Recipes
