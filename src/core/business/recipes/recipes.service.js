@@ -23,6 +23,21 @@ export default function RecipesService(firestore, authentication) {
     }
   }
 
+  async function createRecipe(title) {
+    try {
+      const { uid } = authentication.currentUser
+      const createdRecipe = await recipesRepository.add({ title, uid })
+
+      if (createdRecipe.id) {
+        return createdRecipe
+      }
+
+      return { error: { message: 'Can not create project' } }
+    } catch (error) {
+      return { error }
+    }
+  }
+
   function _mapRecipe(item) {
     const { uid, title, ingredients, process } = item.data()
 
@@ -32,5 +47,6 @@ export default function RecipesService(firestore, authentication) {
   return Object.freeze({
     findRecipes,
     getRecipe,
+    createRecipe,
   })
 }

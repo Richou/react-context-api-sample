@@ -6,8 +6,9 @@ import { withRecipesDependenciesInjection } from "../context/recipes.di";
 import { withRouter } from "react-router";
 import { FullscreenDialog } from "../../../core/ui";
 import RecipesForm from "./recipes-form";
+import { RECIPES_HOME } from "../../castanea.routes";
 
-function RecipesWrapper({ recipesService }) {
+function RecipesWrapper({ recipesService, history }) {
   const recipesContextHelper = useRecipesContext()
   const [createRecipePopupOpen, setCreateRecipePopupOpen] = React.useState(false)
   const [working, setWorking] = React.useState(false)
@@ -26,9 +27,16 @@ function RecipesWrapper({ recipesService }) {
     setCreateRecipePopupOpen(true)
   }, [])
 
-  const onCreateNewRecipeHandler = React.useCallback(() => {
+  const onCreateNewRecipeHandler = React.useCallback(async (recipe) => {
+    console.log('new recipe', recipe)
+
     setWorking(true)
-  }, [])
+    const createdRecipe = await recipesService.createRecipe(recipe.title)
+
+    setWorking(false)
+    setCreateRecipePopupOpen(false)
+    history.push(`${RECIPES_HOME.url}/${createdRecipe.id}`)
+  }, [recipesService, history])
 
   return (
     <>
