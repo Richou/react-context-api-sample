@@ -1,6 +1,5 @@
 import React from 'react'
 import codesReducer from './codes.reducer'
-import CodesContextHelper from './codes.context-helper'
 
 const initialState = {
   codesProjects: [],
@@ -26,7 +25,6 @@ export const CodesProvider = props => {
 export const useCodesContext = () => {
   const state = React.useContext(CodesStateContext);
   const dispatch = React.useContext(CodesDispatchContext);
-  const helper = CodesContextHelper(dispatch)
 
-  return [state, helper]
+  return [state, dispatch]
 }

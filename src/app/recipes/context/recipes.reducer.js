@@ -1,8 +1,6 @@
-import RecipesTypes from './recipes.types'
-
 const recipesReducer = (state, action) => {
   switch(action.type) {
-    case RecipesTypes.SET_RECIPES:
+    case 'recipes:set':
       return {
         ...state,
         recipes: action.payload,

@@ -9,8 +9,8 @@ import { withCodesDependenciesInjection } from "../codes/context/codes.di";
 import { withRecipesDependenciesInjection } from "../recipes/context/recipes.di";
 
 function HomeWrapper({ projectService, recipesService }) {
-  const [codesContext, codesContextHelper] = useCodesContext()
-  const [recipesContext, recipesContextHelper] = useRecipesContext()
+  const [codesContext, dispatchCodes] = useCodesContext()
+  const [recipesContext, dispatchRecipes] = useRecipesContext()
 
   React.useEffect(() => {
     getProjects()
@@ -20,13 +20,19 @@ function HomeWrapper({ projectService, recipesService }) {
   async function getProjects() {
     const response = await projectService.findProjects()
 
-    codesContextHelper.dispatchProjects(response)
+    dispatchCodes({
+      type: 'codeProjects:set',
+      payload: response,
+    })
   }
 
   async function getRecipes() {
     const response = await recipesService.findRecipes()
 
-    recipesContextHelper.dispatchRecipes(response)
+    dispatchRecipes({
+      type: 'recipes:set',
+      payload: response,
+    })
   }
 
   return (

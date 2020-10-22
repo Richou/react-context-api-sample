@@ -9,15 +9,18 @@ import RecipesForm from "./recipes-form";
 import { RECIPES_HOME } from "../../castanea.routes";
 
 function RecipesWrapper({ recipesService, history }) {
-  const [recipesContext, recipesContextHelper] = useRecipesContext()
+  const [recipesContext, dispatch] = useRecipesContext()
   const [createRecipePopupOpen, setCreateRecipePopupOpen] = React.useState(false)
   const [working, setWorking] = React.useState(false)
 
   const getRecipes = React.useCallback(async () => {
     const response = await recipesService.findRecipes()
 
-    recipesContextHelper.dispatchRecipes(response)
-  }, [recipesContextHelper, recipesService])
+    dispatch({
+      type: 'recipes:set',
+      payload: response,
+    })
+  }, [dispatch, recipesService])
 
   React.useEffect(() => {
     getRecipes()

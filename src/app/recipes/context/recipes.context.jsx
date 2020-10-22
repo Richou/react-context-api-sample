@@ -1,6 +1,5 @@
 import React from 'react'
 import recipesReducer from './recipes.reducer'
-import RecipesContextHelper from './recipes.context-helper'
 
 const initialState = {
   recipes: [],
@@ -18,7 +17,6 @@ export const RecipesProvider = props => {
 
 export const useRecipesContext = () => {
   const [state, dispatch] = React.useContext(RecipesContext);
-  const helper = RecipesContextHelper(dispatch)
 
-  return [state, helper]
+  return [state, dispatch]
 }

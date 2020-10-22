@@ -7,7 +7,7 @@ import RecipesSheet from "./recipes-sheet";
 import { useRecipesContext } from "..";
 
 function RecipesSheetWrapper({ recipesService, match }) {
-  const [recipesContext, recipesContextHelper] = useRecipesContext()
+  const [recipesContext, dispatch] = useRecipesContext()
   const [recipe, setRecipe] = React.useState({})
 
   const fetchRecipeById = React.useCallback(async (recipeId) => {
@@ -22,7 +22,7 @@ function RecipesSheetWrapper({ recipesService, match }) {
         setRecipe(fetched)
       }
     }
-  }, [recipesContextHelper, recipesService])
+  }, [dispatch, recipesService])
 
   React.useEffect(() => {
     fetchRecipeById(match.params.id)

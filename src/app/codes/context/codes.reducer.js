@@ -1,19 +1,18 @@
-import CodesTypes from './codes.types'
 import * as table from '../../../core/common/utils/table'
 
 const codesReducer = (state, action) => {
   switch(action.type) {
-    case CodesTypes.SET_CODES_PROJECTS:
+    case 'codeProjects:set':
       return {
         ...state,
         codesProjects: action.payload,
       }
-    case CodesTypes.SET_CODES_WORKSPACE:
+    case 'codeWorkspace:set':
       return {
         ...state,
         codesWorkspace: action.payload,
       }
-    case CodesTypes.ADD_CODES_OPENED_FILES: {
+    case 'codeOpenedFiles:add': {
       const openedIds = state.codesOpenedFiles.map((item) => item.id)
       if (openedIds.includes(action.payload.id)) {
         return { ...state }
@@ -24,7 +23,7 @@ const codesReducer = (state, action) => {
         codesOpenedFiles: [...state.codesOpenedFiles, action.payload],
       }
     }
-    case CodesTypes.CLOSE_CODES_OPENED_FILES: {
+    case 'codeOpenedFiles:close': {
       const idxToClose = action.payload.index
       const filtered = state.codesOpenedFiles.filter((item, index) => index !== idxToClose)
 
@@ -33,19 +32,19 @@ const codesReducer = (state, action) => {
         codesOpenedFiles: filtered,
       }
     }
-    case CodesTypes.CLEAR_CODES_OPENED_FILES: {
+    case 'codeOpenedFiles:clear': {
       return {
         ...state,
         codesOpenedFiles: [],
       }
     }
-    case CodesTypes.SET_CODES_SELECTED_FILES: {
+    case 'codeSelectedFiles:set': {
       return {
         ...state,
         codesSelectedFiles: action.payload.index,
       }
     }
-    case CodesTypes.SET_CODE_CONTENT: {
+    case 'codeContent:set': {
       const { index, value } = action.payload
       const { codesOpenedFiles } = state
 
