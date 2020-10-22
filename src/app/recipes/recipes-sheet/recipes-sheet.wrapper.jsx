@@ -7,11 +7,11 @@ import RecipesSheet from "./recipes-sheet";
 import { useRecipesContext } from "..";
 
 function RecipesSheetWrapper({ recipesService, match }) {
-  const recipesContextHelper = useRecipesContext()
+  const [recipesContext, recipesContextHelper] = useRecipesContext()
   const [recipe, setRecipe] = React.useState({})
 
   const fetchRecipeById = React.useCallback(async (recipeId) => {
-    const found = recipesContextHelper.context().recipes?.find((item) => item.id === recipeId)
+    const found = recipesContext.recipes?.find((item) => item.id === recipeId)
 
     if (found) {
       setRecipe(found)

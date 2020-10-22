@@ -9,7 +9,7 @@ import RecipesForm from "./recipes-form";
 import { RECIPES_HOME } from "../../castanea.routes";
 
 function RecipesWrapper({ recipesService, history }) {
-  const recipesContextHelper = useRecipesContext()
+  const [recipesContext, recipesContextHelper] = useRecipesContext()
   const [createRecipePopupOpen, setCreateRecipePopupOpen] = React.useState(false)
   const [working, setWorking] = React.useState(false)
 
@@ -41,7 +41,7 @@ function RecipesWrapper({ recipesService, history }) {
   return (
     <>
       <Recipes
-        recipes={recipesContextHelper.context().recipes}
+        recipes={recipesContext.recipes}
         onCreateRecipeClicked={createRecipeHandler}
       />
       <FullscreenDialog handleClose={() => setCreateRecipePopupOpen(false)} open={createRecipePopupOpen} title="Ajouter une recette">

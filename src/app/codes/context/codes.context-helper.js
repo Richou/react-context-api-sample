@@ -1,10 +1,6 @@
 import CodesTypes from './codes.types'
 
-export default function CodesContextHelper(ctx, dispatch) {
-  function context() {
-    return ctx
-  }
-
+export default function CodesContextHelper(dispatch) {
   function dispatchProjects(projects) {
     dispatch({
       type: CodesTypes.SET_CODES_PROJECTS,
@@ -59,7 +55,6 @@ export default function CodesContextHelper(ctx, dispatch) {
   }
 
   return Object.freeze({
-    context,
     dispatchProjects,
     dispatchCodesWorkspace,
     dispatchOpenFile,

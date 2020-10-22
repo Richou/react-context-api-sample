@@ -26,6 +26,7 @@ export const CodesProvider = props => {
 export const useCodesContext = () => {
   const state = React.useContext(CodesStateContext);
   const dispatch = React.useContext(CodesDispatchContext);
+  const helper = CodesContextHelper(dispatch)
 
-  return CodesContextHelper(state, dispatch)
+  return [state, helper]
 }

@@ -1,10 +1,6 @@
 import RecipesTypes from './recipes.types'
 
-export default function RecipesContextHelper(ctx, dispatch) {
-  function context() {
-    return ctx
-  }
-
+export default function RecipesContextHelper(dispatch) {
   function dispatchRecipes(recipes) {
     dispatch({
       type: RecipesTypes.SET_RECIPES,
@@ -13,7 +9,6 @@ export default function RecipesContextHelper(ctx, dispatch) {
   }
 
   return Object.freeze({
-    context,
     dispatchRecipes,
   })
 }

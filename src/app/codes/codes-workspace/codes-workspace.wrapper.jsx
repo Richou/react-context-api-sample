@@ -7,11 +7,11 @@ import { SimpleDialog } from "../../../core/ui";
 import NewFileForm from "./new-file-form";
 
 function CodesWorkspaceWrapper({ match, projectService }) {
-  const codesContextHelper = useCodesContext()
+  const [codesContext, codesContextHelper] = useCodesContext()
   const [working, setWorking] = React.useState(true)
   const [openNewFileModal, setOpenNewFileModal] = React.useState(false)
   const [newItemContext, setNewItemContext] = React.useState(null)
-  const { codesOpenedFiles } = codesContextHelper.context()
+  const { codesOpenedFiles } = codesContext
 
   React.useEffect(() => {
     fetchProjectById(match.params.id).then(() => setWorking(false))
@@ -37,7 +37,7 @@ function CodesWorkspaceWrapper({ match, projectService }) {
     await fetchProjectById(match.params.id)
     if (createdItem.mimeType !== 'directory') {
       codesContextHelper.dispatchOpenFile({ ...createdItem, module: createdItem.name })
-      codesContextHelper.dispatchSelectedFile(codesContextHelper.context().codesOpenedFiles.length)
+      codesContextHelper.dispatchSelectedFile(codesContext.codesOpenedFiles.length)
     }
     setOpenNewFileModal(false)
   }
@@ -55,7 +55,7 @@ function CodesWorkspaceWrapper({ match, projectService }) {
   async function onActionsHandler(type, { option, payload }) {
     if (type === 'treeView:openFile') {
       codesContextHelper.dispatchOpenFile(payload)
-      const openedFile = codesContextHelper.context().codesOpenedFiles.map((item) => item.id)
+      const openedFile = codesContext.codesOpenedFiles.map((item) => item.id)
       if (openedFile.length === 0) {
         codesContextHelper.dispatchSelectedFile(0)
       } else {
@@ -81,7 +81,7 @@ function CodesWorkspaceWrapper({ match, projectService }) {
     if (type === 'treeView:moreMenuClicked') {
       if (option === 'New file' || option === 'New directory') {
         const { id, module } = payload
-        const { name: projectName } = codesContextHelper.context().codesWorkspace
+        const { name: projectName } = codesContext.codesWorkspace
 
         const parent = (module === projectName) ? {} : { parent: id }
 
@@ -99,8 +99,8 @@ function CodesWorkspaceWrapper({ match, projectService }) {
   }
 
   async function onSaveFileHandler(newValue) {
-    if (codesContextHelper.context().codesSelectedFiles !== null) {
-      const { codesSelectedFiles, codesOpenedFiles } = codesContextHelper.context()
+    if (codesContext.codesSelectedFiles !== null) {
+      const { codesSelectedFiles, codesOpenedFiles } = codesContext
 
       const toSaveFile = codesOpenedFiles[codesSelectedFiles]
 
@@ -120,9 +120,9 @@ function CodesWorkspaceWrapper({ match, projectService }) {
         onCodeChanged={onCodeChangedHandler}
         working={working}
         onSaveFile={onSaveFileHandler}
-        selectedCodeIndex={codesContextHelper.context().codesSelectedFiles}
-        codesProject={codesContextHelper.context().codesWorkspace}
-        openedFiles={codesContextHelper.context().codesOpenedFiles}
+        selectedCodeIndex={codesContext.codesSelectedFiles}
+        codesProject={codesContext.codesWorkspace}
+        openedFiles={codesContext.codesOpenedFiles}
       />
       <SimpleDialog open={openNewFileModal} title={`New ${newItemContext?.type}`} onClose={handleNewFileClose}>
         <NewFileForm onSubmit={onCreateNewFileHandler} onCancel={handleNewFileClose} />

@@ -9,8 +9,8 @@ import { withCodesDependenciesInjection } from "../codes/context/codes.di";
 import { withRecipesDependenciesInjection } from "../recipes/context/recipes.di";
 
 function HomeWrapper({ projectService, recipesService }) {
-  const codesContextHelper = useCodesContext()
-  const recipesContextHelper = useRecipesContext()
+  const [codesContext, codesContextHelper] = useCodesContext()
+  const [recipesContext, recipesContextHelper] = useRecipesContext()
 
   React.useEffect(() => {
     getProjects()
@@ -31,8 +31,8 @@ function HomeWrapper({ projectService, recipesService }) {
 
   return (
     <Home
-      codeProjects={codesContextHelper.context().codesProjects}
-      recipes={recipesContextHelper.context().recipes}
+      codeProjects={codesContext.codesProjects}
+      recipes={recipesContext.recipes}
     />
   )
 }

@@ -18,6 +18,7 @@ export const RecipesProvider = props => {
 
 export const useRecipesContext = () => {
   const [state, dispatch] = React.useContext(RecipesContext);
+  const helper = RecipesContextHelper(dispatch)
 
-  return RecipesContextHelper(state, dispatch)
+  return [state, helper]
 }

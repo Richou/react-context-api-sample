@@ -7,7 +7,7 @@ import { CODES_WORKSPACE } from "../../castanea.routes";
 import { withCodesDependenciesInjection } from "../context/codes.di";
 
 function CodesWrapper({ history, projectService }) {
-  const codesContextHelper = useCodesContext()
+  const [codesContext, codesContextHelper] = useCodesContext()
   const [, setWorking] = React.useState(false)
   const [creating, setCreating] = React.useState(false)
 
@@ -36,7 +36,7 @@ function CodesWrapper({ history, projectService }) {
 
   return (
     <Codes
-      codesProjects={codesContextHelper.context().codesProjects}
+      codesProjects={codesContext.codesProjects}
       onCodesCreate={onCodesCreateHandle}
       onCodesClicked={onCodesClickedHandle}
       loadings={{ creating }}
