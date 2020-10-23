@@ -20,11 +20,11 @@ function RecipesWrapper({ recipesService, history }) {
       type: 'recipes:set',
       payload: response,
     })
-  }, [dispatch, recipesService])
+  }, [])
 
   React.useEffect(() => {
     getRecipes()
-  }, [getRecipes])
+  }, [])
 
   const createRecipeHandler = React.useCallback(() => {
     setCreateRecipePopupOpen(true)

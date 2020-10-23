@@ -8,28 +8,29 @@ import { useRecipesContext } from "..";
 
 function RecipesSheetWrapper({ recipesService, match }) {
   const [recipesContext, dispatch] = useRecipesContext()
-  const [recipe, setRecipe] = React.useState({})
 
   const fetchRecipeById = React.useCallback(async (recipeId) => {
     const found = recipesContext.recipes?.find((item) => item.id === recipeId)
 
     if (found) {
-      setRecipe(found)
+      dispatch({ type: 'recipe:set', payload: found })
     } else {
       const fetched = await recipesService.getRecipe(recipeId)
 
       if (!fetched.error) {
-        setRecipe(fetched)
+        dispatch({ type: 'recipe:set', payload: fetched })
       }
     }
-  }, [dispatch, recipesService])
+  }, [])
 
   React.useEffect(() => {
     fetchRecipeById(match.params.id)
-  }, [fetchRecipeById, match.params.id])
+
+    return () => dispatch({ type: 'recipe:set', payload: null })
+  }, [])
 
   return (
-    <RecipesSheet recipe={recipe} />
+    <RecipesSheet recipe={recipesContext.recipe} />
   )
 }
 

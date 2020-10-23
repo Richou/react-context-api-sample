@@ -3,6 +3,7 @@ import recipesReducer from './recipes.reducer'
 
 const initialState = {
   recipes: [],
+  recipe: null,
 }
 
 const RecipesContext = React.createContext(null);
