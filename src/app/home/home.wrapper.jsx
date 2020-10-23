@@ -7,6 +7,8 @@ import { useRecipesContext } from "../recipes";
 
 import { withCodesDependenciesInjection } from "../codes/context/codes.di";
 import { withRecipesDependenciesInjection } from "../recipes/context/recipes.di";
+import CodesTypes from "../codes/context/codes.types";
+import RecipesTypes from "../recipes/context/recipes.types";
 
 function HomeWrapper({ projectService, recipesService }) {
   const [codesContext, dispatchCodes] = useCodesContext()
@@ -21,7 +23,7 @@ function HomeWrapper({ projectService, recipesService }) {
     const response = await projectService.findProjects()
 
     dispatchCodes({
-      type: 'codeProjects:set',
+      type: CodesTypes.SET_CODES_PROJECTS,
       payload: response,
     })
   }
@@ -30,7 +32,7 @@ function HomeWrapper({ projectService, recipesService }) {
     const response = await recipesService.findRecipes()
 
     dispatchRecipes({
-      type: 'recipes:set',
+      type: RecipesTypes.SET_RECIPES,
       payload: response,
     })
   }

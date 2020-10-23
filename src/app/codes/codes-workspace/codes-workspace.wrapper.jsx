@@ -5,6 +5,7 @@ import { withCodesDependenciesInjection } from "../context/codes.di";
 import CodesWorkspace from "./codes-workspace";
 import { SimpleDialog } from "../../../core/ui";
 import NewFileForm from "./new-file-form";
+import CodesTypes from "../context/codes.types";
 
 function CodesWorkspaceWrapper({ match, projectService }) {
   const [codesContext, dispatch] = useCodesContext()
@@ -17,14 +18,14 @@ function CodesWorkspaceWrapper({ match, projectService }) {
     fetchProjectById(match.params.id).then(() => setWorking(false))
 
     return () => {
-      dispatch({ type: 'codeOpenedFiles:clear' })
-      dispatch({ type: 'codeWorkspace:set', payload: [] })
+      dispatch({ type: CodesTypes.CLEAR_CODES_OPENED_FILES })
+      dispatch({ type: CodesTypes.SET_CODES_WORKSPACE, payload: [] })
     }
   }, [])
 
   React.useEffect(() => {
     if (codesOpenedFiles?.length === 0) {
-      dispatch({ type: 'codeSelectedFiles:set', payload: { index: null } })
+      dispatch({ type: CodesTypes.SET_CODES_SELECTED_FILES, payload: { index: null } })
     }
   }, [codesOpenedFiles])
 
@@ -38,11 +39,11 @@ function CodesWorkspaceWrapper({ match, projectService }) {
     await fetchProjectById(match.params.id)
     if (createdItem.mimeType !== 'directory') {
       dispatch({
-        type: 'codeOpenedFiles:add',
+        type: CodesTypes.ADD_CODES_OPENED_FILES,
         payload: { ...createdItem, module: createdItem.name },
       })
       dispatch({
-        type: 'codeSelectedFiles:set',
+        type: CodesTypes.SET_CODES_SELECTED_FILES,
         payload: { index: codesContext.codesOpenedFiles.length },
       })
     }
@@ -55,7 +56,7 @@ function CodesWorkspaceWrapper({ match, projectService }) {
 
     if (!mapped.error) {
       dispatch({
-        type: 'codeWorkspace:set',
+        type: CodesTypes.SET_CODES_WORKSPACE,
         payload: mapped,
       })
     }
@@ -65,25 +66,25 @@ function CodesWorkspaceWrapper({ match, projectService }) {
   async function onActionsHandler(type, { option, payload }) {
     if (type === 'treeView:openFile') {
       dispatch({
-        type: 'codeOpenedFiles:add',
+        type: CodesTypes.ADD_CODES_OPENED_FILES,
         payload,
       })
       const openedFile = codesContext.codesOpenedFiles.map((item) => item.id)
       if (openedFile.length === 0) {
         dispatch({
-          type: 'codeSelectedFiles:set',
+          type: CodesTypes.SET_CODES_SELECTED_FILES,
           payload: { index: 0 },
         })
       } else {
         const indexOfOpenedFile = openedFile.indexOf(payload.id)
         if (indexOfOpenedFile > -1) {
           dispatch({
-            type: 'codeSelectedFiles:set',
+            type: CodesTypes.SET_CODES_SELECTED_FILES,
             payload: { index: indexOfOpenedFile },
           })
         } else {
           dispatch({
-            type: 'codeSelectedFiles:set',
+            type: CodesTypes.SET_CODES_SELECTED_FILES,
             payload: { index: openedFile.length },
           })
         }
@@ -93,7 +94,7 @@ function CodesWorkspaceWrapper({ match, projectService }) {
     if (type === 'tabs:closeFile') {
       const { index } = payload
       dispatch({
-        type: 'codeOpenedFiles:close',
+        type: CodesTypes.CLOSE_CODES_OPENED_FILES,
         payload: { index },
       })
     }
@@ -101,7 +102,7 @@ function CodesWorkspaceWrapper({ match, projectService }) {
     if (type === 'tabs:selected') {
       const { index } = payload
       dispatch({
-        type: 'codeSelectedFiles:set',
+        type: CodesTypes.SET_CODES_SELECTED_FILES,
         payload: { index },
       })
     }
@@ -124,7 +125,7 @@ function CodesWorkspaceWrapper({ match, projectService }) {
 
   function onCodeChangedHandler(value, index) {
     dispatch({
-      type: 'codeContent:set',
+      type: CodesTypes.SET_CODE_CONTENT,
       payload: { index, value }
     })
   }

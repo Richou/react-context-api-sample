@@ -7,6 +7,7 @@ import { withRouter } from "react-router";
 import { FullscreenDialog } from "../../../core/ui";
 import RecipesForm from "./recipes-form";
 import { RECIPES_HOME } from "../../castanea.routes";
+import RecipesTypes from "../context/recipes.types";
 
 function RecipesWrapper({ recipesService, history }) {
   const [recipesContext, dispatch] = useRecipesContext()
@@ -17,7 +18,7 @@ function RecipesWrapper({ recipesService, history }) {
     const response = await recipesService.findRecipes()
 
     dispatch({
-      type: 'recipes:set',
+      type: RecipesTypes.SET_RECIPES,
       payload: response,
     })
   }, [])
