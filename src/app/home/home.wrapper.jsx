@@ -7,12 +7,10 @@ import { useRecipesContext } from "../recipes";
 
 import { withCodesDependenciesInjection } from "../codes/context/codes.di";
 import { withRecipesDependenciesInjection } from "../recipes/context/recipes.di";
-import CodesTypes from "../codes/context/codes.types";
-import RecipesTypes from "../recipes/context/recipes.types";
 
 function HomeWrapper({ projectService, recipesService }) {
-  const [codesContext, dispatchCodes] = useCodesContext()
-  const [recipesContext, dispatchRecipes] = useRecipesContext()
+  const [codesContext, codesContextHelper] = useCodesContext()
+  const [recipesContext, recipesContextHelper] = useRecipesContext()
 
   React.useEffect(() => {
     getProjects()
@@ -22,19 +20,13 @@ function HomeWrapper({ projectService, recipesService }) {
   async function getProjects() {
     const response = await projectService.findProjects()
 
-    dispatchCodes({
-      type: CodesTypes.SET_CODES_PROJECTS,
-      payload: response,
-    })
+    codesContextHelper.dispatchProjects(response)
   }
 
   async function getRecipes() {
     const response = await recipesService.findRecipes()
 
-    dispatchRecipes({
-      type: RecipesTypes.SET_RECIPES,
-      payload: response,
-    })
+    recipesContextHelper.dispatchRecipes(response)
   }
 
   return (

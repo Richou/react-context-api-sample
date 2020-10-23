@@ -5,21 +5,20 @@ import { compose } from "recompose";
 import { withRecipesDependenciesInjection } from "../context/recipes.di";
 import RecipesSheet from "./recipes-sheet";
 import { useRecipesContext } from "..";
-import RecipesTypes from "../context/recipes.types";
 
 function RecipesSheetWrapper({ recipesService, match }) {
-  const [recipesContext, dispatch] = useRecipesContext()
+  const [recipesContext, recipesContextHelper] = useRecipesContext()
 
   const fetchRecipeById = React.useCallback(async (recipeId) => {
     const found = recipesContext.recipes?.find((item) => item.id === recipeId)
 
     if (found) {
-      dispatch({ type: RecipesTypes.SET_RECIPE, payload: found })
+      recipesContextHelper.dispatchRecipe(found)
     } else {
       const fetched = await recipesService.getRecipe(recipeId)
 
       if (!fetched.error) {
-        dispatch({ type: RecipesTypes.SET_RECIPE, payload: fetched })
+        recipesContextHelper.dispatchRecipe(fetched)
       }
     }
   }, [])
@@ -27,7 +26,7 @@ function RecipesSheetWrapper({ recipesService, match }) {
   React.useEffect(() => {
     fetchRecipeById(match.params.id)
 
-    return () => dispatch({ type: RecipesTypes.SET_RECIPE, payload: null })
+    return () => recipesContextHelper.dispatchClearRecipe()
   }, [])
 
   return (

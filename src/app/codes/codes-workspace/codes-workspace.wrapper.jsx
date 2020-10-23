@@ -5,10 +5,9 @@ import { withCodesDependenciesInjection } from "../context/codes.di";
 import CodesWorkspace from "./codes-workspace";
 import { SimpleDialog } from "../../../core/ui";
 import NewFileForm from "./new-file-form";
-import CodesTypes from "../context/codes.types";
 
 function CodesWorkspaceWrapper({ match, projectService }) {
-  const [codesContext, dispatch] = useCodesContext()
+  const [codesContext, codesContextHelper] = useCodesContext()
   const [working, setWorking] = React.useState(true)
   const [openNewFileModal, setOpenNewFileModal] = React.useState(false)
   const [newItemContext, setNewItemContext] = React.useState(null)
@@ -18,14 +17,13 @@ function CodesWorkspaceWrapper({ match, projectService }) {
     fetchProjectById(match.params.id).then(() => setWorking(false))
 
     return () => {
-      dispatch({ type: CodesTypes.CLEAR_CODES_OPENED_FILES })
-      dispatch({ type: CodesTypes.SET_CODES_WORKSPACE, payload: [] })
+      codesContextHelper.dispatchClearCodesWorkspace()
     }
   }, [])
 
   React.useEffect(() => {
     if (codesOpenedFiles?.length === 0) {
-      dispatch({ type: CodesTypes.SET_CODES_SELECTED_FILES, payload: { index: null } })
+      codesContextHelper.dispatchSelectedFile(null)
     }
   }, [codesOpenedFiles])
 
@@ -38,14 +36,8 @@ function CodesWorkspaceWrapper({ match, projectService }) {
 
     await fetchProjectById(match.params.id)
     if (createdItem.mimeType !== 'directory') {
-      dispatch({
-        type: CodesTypes.ADD_CODES_OPENED_FILES,
-        payload: { ...createdItem, module: createdItem.name },
-      })
-      dispatch({
-        type: CodesTypes.SET_CODES_SELECTED_FILES,
-        payload: { index: codesContext.codesOpenedFiles.length },
-      })
+      codesContextHelper.dispatchOpenFile({ ...createdItem, module: createdItem.name })
+      codesContextHelper.dispatchSelectedFile(codesContext.codesOpenedFiles.length)
     }
     setOpenNewFileModal(false)
   }
@@ -55,56 +47,35 @@ function CodesWorkspaceWrapper({ match, projectService }) {
     const mapped = projectService.mapProject(project)
 
     if (!mapped.error) {
-      dispatch({
-        type: CodesTypes.SET_CODES_WORKSPACE,
-        payload: mapped,
-      })
+      codesContextHelper.dispatchCodesWorkspace(mapped)
     }
     return mapped
   }
 
   async function onActionsHandler(type, { option, payload }) {
     if (type === 'treeView:openFile') {
-      dispatch({
-        type: CodesTypes.ADD_CODES_OPENED_FILES,
-        payload,
-      })
+      codesContextHelper.dispatchOpenFile(payload)
       const openedFile = codesContext.codesOpenedFiles.map((item) => item.id)
       if (openedFile.length === 0) {
-        dispatch({
-          type: CodesTypes.SET_CODES_SELECTED_FILES,
-          payload: { index: 0 },
-        })
+        codesContextHelper.dispatchSelectedFile(0)
       } else {
         const indexOfOpenedFile = openedFile.indexOf(payload.id)
         if (indexOfOpenedFile > -1) {
-          dispatch({
-            type: CodesTypes.SET_CODES_SELECTED_FILES,
-            payload: { index: indexOfOpenedFile },
-          })
+          codesContextHelper.dispatchSelectedFile(indexOfOpenedFile)
         } else {
-          dispatch({
-            type: CodesTypes.SET_CODES_SELECTED_FILES,
-            payload: { index: openedFile.length },
-          })
+          codesContextHelper.dispatchSelectedFile(openedFile.length)
         }
       }
     }
 
     if (type === 'tabs:closeFile') {
       const { index } = payload
-      dispatch({
-        type: CodesTypes.CLOSE_CODES_OPENED_FILES,
-        payload: { index },
-      })
+      codesContextHelper.dispatchCloseFile(index)
     }
 
     if (type === 'tabs:selected') {
       const { index } = payload
-      dispatch({
-        type: CodesTypes.SET_CODES_SELECTED_FILES,
-        payload: { index },
-      })
+      codesContextHelper.dispatchSelectedFile(index)
     }
 
     if (type === 'treeView:moreMenuClicked') {
@@ -124,10 +95,7 @@ function CodesWorkspaceWrapper({ match, projectService }) {
   }
 
   function onCodeChangedHandler(value, index) {
-    dispatch({
-      type: CodesTypes.SET_CODE_CONTENT,
-      payload: { index, value }
-    })
+    codesContextHelper.dispatchCodeContent(value, index)
   }
 
   async function onSaveFileHandler(newValue) {
