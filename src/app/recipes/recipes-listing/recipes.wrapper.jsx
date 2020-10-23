@@ -17,11 +17,11 @@ function RecipesWrapper({ recipesService, history }) {
     const response = await recipesService.findRecipes()
 
     recipesContextHelper.dispatchRecipes(response)
-  }, [recipesContextHelper, recipesService])
+  }, [])
 
   React.useEffect(() => {
     getRecipes()
-  }, [getRecipes])
+  }, [])
 
   const createRecipeHandler = React.useCallback(() => {
     setCreateRecipePopupOpen(true)

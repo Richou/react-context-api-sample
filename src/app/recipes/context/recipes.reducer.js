@@ -7,6 +7,11 @@ const recipesReducer = (state, action) => {
         ...state,
         recipes: action.payload,
       }
+    case RecipesTypes.SET_RECIPE:
+      return {
+        ...state,
+        recipe: action.payload,
+      }
     default:
       return state
   }

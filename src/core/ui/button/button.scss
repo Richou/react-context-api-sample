@@ -12,6 +12,10 @@ button.qs-button {
 
   svg {
     stroke: $primary-font-color;
+
+    circle {
+      stroke: $primary-font-color;
+    }
   }
 
   &:hover:not([disabled]) {

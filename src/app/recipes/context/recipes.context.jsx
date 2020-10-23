@@ -4,6 +4,7 @@ import RecipesContextHelper from './recipes.context-helper'
 
 const initialState = {
   recipes: [],
+  recipe: null,
 }
 
 const RecipesContext = React.createContext(null);

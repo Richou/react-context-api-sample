@@ -4,6 +4,8 @@ import CastaneaMenu from "../../castanea.menu";
 import { CastaneaContainer, CastaneaHeader } from "../../../core/components/castanea";
 import { HOME_ROUTE, RECIPES_HOME } from "../../castanea.routes";
 
+import './recipes-sheet.scss'
+
 const breadcrumb = [
   {
     to: HOME_ROUTE.url,
@@ -18,7 +20,8 @@ const breadcrumb = [
 function RecipesSheet({ recipe }) {
   return (
     <CastaneaContainer menu={CastaneaMenu}>
-      <CastaneaHeader breadcrumb={breadcrumb}>{recipe.title}</CastaneaHeader>
+      <CastaneaHeader breadcrumb={breadcrumb}>{recipe?.title}</CastaneaHeader>
+      <section className="recipe-process-container">{recipe?.process}</section>
     </CastaneaContainer>
   )
 }
