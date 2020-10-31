@@ -17,13 +17,19 @@ async function onLogout() {
 }
 
 function LogoutWrapper({ history }) {
-  const codesContextHelper = useCodesContext()
-  const recipesContextHelper = useRecipesContext()
+  const [, dispatchCodes] = useCodesContext()
+  const [, dispatchRecipes] = useRecipesContext()
 
   React.useEffect(() => {
     onLogout().then(() => history.push(HOME_ROUTE.url))
-    codesContextHelper.dispatchProjects([])
-    recipesContextHelper.dispatchRecipes([])
+    dispatchCodes({
+      type: 'codeProjects:set',
+      payload: [],
+    })
+    dispatchRecipes({
+      type: 'recipes:set',
+      payload: [],
+    })
   }, [history])
 
   return (
