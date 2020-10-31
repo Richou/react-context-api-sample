@@ -8,6 +8,8 @@ import { compose } from "recompose";
 
 import { useCodesContext } from "../../codes";
 import { useRecipesContext } from "../../recipes";
+import RecipesTypes from "../../recipes/context/recipes.types";
+import CodesTypes from "../../codes/context/codes.types";
 
 const firebase = Firebase()
 const authenticationService = AuthenticationService(firebase)
@@ -23,11 +25,11 @@ function LogoutWrapper({ history }) {
   React.useEffect(() => {
     onLogout().then(() => history.push(HOME_ROUTE.url))
     dispatchCodes({
-      type: 'codeProjects:set',
+      type: CodesTypes.SET_CODES_PROJECTS,
       payload: [],
     })
     dispatchRecipes({
-      type: 'recipes:set',
+      type: RecipesTypes.SET_RECIPES,
       payload: [],
     })
   }, [history])
